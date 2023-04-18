@@ -5,8 +5,8 @@ using namespace std;
 const double INF = 1e15;
 
 double dist(double x, double y, array<double, 3>line) {
-    double d = (line[0] * x + line[1] * y + line[2]) / (sqrt(line[0] * line[0] + line[1] * line[1]));
-    return d * d;
+    double y_pred = line[0] * x + line[2];
+    return (y_pred - y) * (y_pred - y);
 }
 
 array<double, 3>get_line(vector<array<double, 2>>&points) {
@@ -56,6 +56,7 @@ int32_t main() {
 
     vector<double>dp(N);
     vector<bool>vis(N);
+    vector<int>optimal(N);
 
     auto f = [&](auto &&opt, int j) -> double {
         if(j < 0) return 0;
@@ -63,18 +64,37 @@ int32_t main() {
             return dp[j];
         vis[j] = true;
         double cur_err = INF;
-        int taken = -1;
         for(int i = 0; i <= j ; i++) {
             double val = opt(opt, i - 1);
             if(val + C + e[i][j] < cur_err) {
                 cur_err = val + C + e[i][j];
-                taken = i;
+                optimal[j] = i;
             }
         }
         return dp[j] = cur_err;
     };
 
-    cout << f(f , N - 1) << '\n';
-    dbg(dp);
+    cout << "Min Error : " << f(f , N - 1) << '\n';
 
+    int cur_seg = N - 1;
+    vector<vector<array<double , 2>>>segments;
+    while(cur_seg > 0) {
+        int from = optimal[cur_seg];
+        vector<array<double , 2>>cur_segment;
+        for(int j = from; j <= cur_seg ; j++)
+            cur_segment.push_back(points[j]);
+        segments.push_back(cur_segment);
+        cur_seg = from - 1;
+    }
+
+    reverse(begin(segments), end(segments));
+    cout << "Number of lines : " << segments.size() << '\n';
+    int cur_l = 1;
+    for(auto &p : segments) {
+        cout << "Line " << cur_l++ << ":\n";
+        for(auto &[x, y] : p)
+            cout << "(" << x << "," << y << ") ";
+        cout << '\n'; 
+        auto cur_line = get_line(p);
+    }
 }
