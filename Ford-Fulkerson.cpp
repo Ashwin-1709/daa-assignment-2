@@ -16,7 +16,6 @@ int32_t main() {
         adj[source].push_back(dest);
         adj[dest].push_back(source);
         residualCapacity[source][dest] = capacity;
-        residualCapacity[dest][source] = capacity;
     }
 
     int64_t flow = 0;
