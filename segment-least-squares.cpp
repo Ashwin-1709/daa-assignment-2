@@ -75,7 +75,7 @@ int32_t main() {
     };
 
     cout << "Min Error : " << f(f , N - 1) << '\n';
-
+    dbg(optimal);
     int cur_seg = N - 1;
     vector<vector<array<double , 2>>>segments;
     while(cur_seg > 0) {
