@@ -40,6 +40,8 @@ int32_t main() {
         double x, y; cin >> x >> y;
         points.push_back({x, y});
     }
+
+    sort(begin(points), end(points));
     
     vector<vector<double>>e(N, vector<double>(N));
     for(int i = 0 ; i < N ; i++) {
@@ -73,5 +75,6 @@ int32_t main() {
     };
 
     cout << f(f , N - 1) << '\n';
+    dbg(dp);
 
 }
