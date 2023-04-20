@@ -94,6 +94,7 @@ int32_t main() {
     cout << "Number of lines : " << segments.size() << '\n';
     int cur_l = 1;
     for(auto &p : segments) {
+        cout << "Line " << cur_l++ << " :\n";
         for(auto &[x, y] : p)
             cout << "(" << x << "," << y << ") ";
         cout << '\n'; 
