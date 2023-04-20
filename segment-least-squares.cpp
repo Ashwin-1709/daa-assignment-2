@@ -5,6 +5,8 @@ using namespace std;
 const double INF = 1e15;
 
 double dist(double x, double y, array<double, 3>line) {
+    if(line[1] == 0) 
+        return (x + line[2]) * (x + line[2]);
     double y_pred = line[0] * x + line[2];
     return (y_pred - y) * (y_pred - y);
 }
@@ -18,6 +20,8 @@ array<double, 3>get_line(vector<array<double, 2>>&points) {
         sum_x2 += (x * x);
     }
     uint32_t N = points.size();
+    if(N * sum_x2 - sum_x * sum_x == 0)
+        return {1 , 0 , -sum_x / N};
     double slope = (N * sum_xy - sum_x * sum_y);
     slope = slope / (N * sum_x2 - sum_x * sum_x);
 
@@ -75,7 +79,6 @@ int32_t main() {
     };
 
     cout << "Min Error : " << f(f , N - 1) << '\n';
-    dbg(optimal);
     int cur_seg = N - 1;
     vector<vector<array<double , 2>>>segments;
     while(cur_seg > 0) {
@@ -91,7 +94,6 @@ int32_t main() {
     cout << "Number of lines : " << segments.size() << '\n';
     int cur_l = 1;
     for(auto &p : segments) {
-        cout << "Line " << cur_l++ << ":\n";
         for(auto &[x, y] : p)
             cout << "(" << x << "," << y << ") ";
         cout << '\n'; 
