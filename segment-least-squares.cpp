@@ -78,7 +78,7 @@ int32_t main() {
         return dp[j] = cur_err;
     };
 
-    cout << "Min Error : " << f(f , N - 1) << '\n';
+    cout << f(f , N - 1) << '\n';
     int cur_seg = N - 1;
     vector<vector<array<double , 2>>>segments;
     while(cur_seg > 0) {
@@ -91,13 +91,12 @@ int32_t main() {
     }
 
     reverse(begin(segments), end(segments));
-    cout << "Number of lines : " << segments.size() << '\n';
-    int cur_l = 1;
+    cout << segments.size() << '\n';
     for(auto &p : segments) {
-        cout << "Line " << cur_l++ << " :\n";
+        cout << p.size() << '\n';
         for(auto &[x, y] : p)
-            cout << "(" << x << "," << y << ") ";
-        cout << '\n'; 
+            cout << x << ' ' << y << '\n';
         auto cur_line = get_line(p);
+        cout << cur_line[0] << ' ' << cur_line[1] << ' ' << cur_line[2] << '\n';
     }
 }
