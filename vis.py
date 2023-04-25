@@ -35,5 +35,11 @@ for _ in range(len(partitions)) :
     a, b, c = line_eq[_]
     if b == 0 : 
         plt.axvline(x = -c, color = col_arr[cur_col])
+    else : 
+        y_max_p = a * x_max + c
+        y_min_p = a * x_min + c
+        x_now = [x_min, x_max]
+        y_now = [y_min_p, y_max_p]
+        ax.plot(x_now, y_now, color = col_arr[cur_col])
     cur_col ^= 1
 plt.show()
