@@ -79,62 +79,99 @@ $(function() {
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">using namespace </span>std;</div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">const</span> int64_t MAX_FLOW = INT64_MAX;</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">   18</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">find_simple_path</a> (int64_t source, int64_t sink, vector&lt;vector&lt;int64_t&gt;&gt;&amp;residualCapacity, vector&lt;vector&lt;int64_t&gt;&gt;&amp;adj) -&gt; pair&lt;vector&lt;int64_t&gt;, int64_t&gt;{</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">int</span> N = residualCapacity.size();</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    vector&lt;int64_t&gt;parent(N + 1, -1);</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    queue&lt;array&lt;int64_t, 2&gt;&gt;Q;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    parent[source] = source;</div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    Q.push({MAX_FLOW, source});</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="keywordflow">while</span>(!Q.empty()) {</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">auto</span> [cur_flow, cur_node] = Q.front();</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        Q.pop();</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordflow">if</span>(cur_node == sink)</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;            <span class="keywordflow">return</span> {parent, cur_flow};</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;neighbours : adj[cur_node]) {</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <span class="keywordflow">if</span>(parent[neighbours] == -1 and residualCapacity[cur_node][neighbours] &gt; 0) {</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                parent[neighbours] = cur_node;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                int64_t best_flow = min(cur_flow, residualCapacity[cur_node][neighbours]);</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                Q.push({best_flow, neighbours});</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;            }</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        }</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    }</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160; </div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    <span class="keywordflow">return</span> {parent, 0LL};</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;};</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;map&lt;array&lt;int , 2&gt;, <span class="keywordtype">int</span>&gt;flow;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">   19</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">find_simple_path</a> (int64_t source, int64_t sink, vector&lt;vector&lt;int64_t&gt;&gt;&amp;residualCapacity, vector&lt;vector&lt;int64_t&gt;&gt;&amp;adj) -&gt; pair&lt;vector&lt;int64_t&gt;, int64_t&gt;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keywordtype">int</span> N = residualCapacity.size();</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    vector&lt;int64_t&gt;parent(N + 1, -1);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    queue&lt;array&lt;int64_t, 2&gt;&gt;Q;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    parent[source] = source;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    Q.push({MAX_FLOW, source});</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="comment">// finds a simple path from sink with non zero flow</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="keywordflow">while</span>(!Q.empty()) {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;        <span class="keyword">auto</span> [cur_flow, cur_node] = Q.front();</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        Q.pop();</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;        <span class="keywordflow">if</span>(cur_node == sink)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;            <span class="keywordflow">return</span> {parent, cur_flow};</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;neighbours : adj[cur_node]) {</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;            <span class="comment">// if residual capacity &gt; 0 and not visited, visit it</span></div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;            <span class="keywordflow">if</span>(parent[neighbours] == -1 and residualCapacity[cur_node][neighbours] &gt; 0) {</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;                parent[neighbours] = cur_node;</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                <span class="comment">// update the best flow</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                int64_t best_flow = min(cur_flow, residualCapacity[cur_node][neighbours]);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;                Q.push({best_flow, neighbours});</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            }</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;        }</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    }</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160; </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="algorithm_8h.html#a6e9c07823a98eb8c35157ba64ff40ecf">   49</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="algorithm_8h.html#a6e9c07823a98eb8c35157ba64ff40ecf">augment_path</a> (vector&lt;int64_t&gt;parent, int64_t best_flow, int64_t s, int64_t t, vector&lt;vector&lt;int64_t&gt;&gt;&amp;residualCapacity) -&gt; <span class="keywordtype">void</span> {</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    <span class="keywordtype">int</span> cur_node = t;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    vector&lt;int&gt;path;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keywordflow">while</span>(cur_node != s) {</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        path.push_back(cur_node);</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;        <span class="keywordtype">int</span> back_node = parent[cur_node];</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        residualCapacity[back_node][cur_node] -= best_flow;</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        residualCapacity[cur_node][back_node] += best_flow;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        cur_node = back_node;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    }</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    reverse(begin(path), end(path));</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;};</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="line" href="algorithm_8h.html#a1bf60db4f62f84db06c0ef4544dda51d">   68</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="algorithm_8h.html#a1bf60db4f62f84db06c0ef4544dda51d">findFlow</a>(int64_t s, int64_t t, vector&lt;vector&lt;int64_t&gt;&gt;&amp;residualCapacity, vector&lt;vector&lt;int64_t&gt;&gt;&amp;adj) -&gt; int64_t {</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    int64_t flow = 0;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordflow">while</span>(<span class="keyword">true</span>) {</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="keyword">auto</span> [parent, best_flow] = <a class="code" href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">find_simple_path</a>(s, t, residualCapacity, adj);</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;        <span class="keywordflow">if</span>(!best_flow)</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            <span class="keywordflow">break</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <a class="code" href="algorithm_8h.html#a6e9c07823a98eb8c35157ba64ff40ecf">augment_path</a>(parent, best_flow, s, t, residualCapacity);</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        flow += best_flow;</div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;    }</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordflow">return</span> flow;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;};</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keywordflow">return</span> {parent, 0LL};</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;};</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160; </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="algorithm_8h.html#a5278b32354dd458746f25a298ee4097f">   53</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="algorithm_8h.html#a5278b32354dd458746f25a298ee4097f">augment_path</a> (vector&lt;int64_t&gt;parent, int64_t best_flow, int64_t s, int64_t t, vector&lt;vector&lt;int64_t&gt;&gt;&amp;residualCapacity, set&lt;array&lt;int64_t, 2&gt;&gt;&amp;forwardEdges) -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">int</span> cur_node = t;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    vector&lt;int&gt;path;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="comment">// backtracking the path</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordflow">while</span>(cur_node != s) {</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;        path.push_back(cur_node);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keywordtype">int</span> back_node = parent[cur_node];</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;        <span class="comment">// if forward edge -&gt; decrease the flow</span></div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;        <span class="comment">// if backward edge -&gt; increase the flow</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keywordflow">if</span>(forwardEdges.count({back_node, cur_node})) {</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            flow[{back_node, cur_node}] -= best_flow;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        } <span class="keywordflow">else</span> flow[{back_node, cur_node}] += best_flow;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;        <span class="comment">// update the residual capacities</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        residualCapacity[back_node][cur_node] -= best_flow;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;        residualCapacity[cur_node][back_node] += best_flow;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        cur_node = back_node;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    }</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    reverse(begin(path), end(path));</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;};</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00081"></a><span class="lineno"><a class="line" href="algorithm_8h.html#a706ed886b7e99051998b87de5327042f">   81</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="algorithm_8h.html#a706ed886b7e99051998b87de5327042f">findFlow</a>(int64_t s, int64_t t, vector&lt;vector&lt;int64_t&gt;&gt;&amp;residualCapacity, vector&lt;vector&lt;int64_t&gt;&gt;&amp;adj, set&lt;array&lt;int64_t, 2&gt;&gt;&amp;forwardEdges) -&gt; int64_t {</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    int64_t flow = 0;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordflow">while</span>(<span class="keyword">true</span>) {</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;        <span class="keyword">auto</span> [parent, best_flow] = <a class="code" href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">find_simple_path</a>(s, t, residualCapacity, adj);</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        <span class="keywordflow">if</span>(!best_flow)</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;            <span class="keywordflow">break</span>;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <a class="code" href="algorithm_8h.html#a5278b32354dd458746f25a298ee4097f">augment_path</a>(parent, best_flow, s, t, residualCapacity, forwardEdges);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;        flow += best_flow;</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    }</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordflow">return</span> flow;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;};</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="algorithm_8h.html#aad2c9223068a16dc2e15ca152b884e94">  100</a></span>&#160;<span class="keyword">auto</span> <a class="code" href="algorithm_8h.html#aad2c9223068a16dc2e15ca152b884e94">minCut</a>(int64_t s, int64_t t, vector&lt;vector&lt;int64_t&gt;&gt;&amp;residualCapacity, vector&lt;vector&lt;int64_t&gt;&gt;&amp;adj, set&lt;array&lt;int64_t, 2&gt;&gt;&amp;forwardEdges) -&gt; set&lt;array&lt;int64_t, 2&gt;&gt; {</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;    <span class="keywordtype">int</span> N = (int)residualCapacity.size() + 1;</div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;    <span class="comment">// To find the mincut, we compute the reachability of every vertice from sink</span></div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;    vector&lt;int64_t&gt; vis(N+1);</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    set&lt;array&lt;int64_t, 2&gt;&gt; minCuts;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keyword">auto</span> findCut = [&amp;](<span class="keyword">auto</span> &amp;&amp;findCut, int64_t src) -&gt; <span class="keywordtype">void</span>{</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;        vis[src] = 1;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;        <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;neighbours : adj[src]){</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;            <span class="keywordflow">if</span>(residualCapacity[src][neighbours] &gt; 0 &amp;&amp; !vis[neighbours]){</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;                findCut(findCut, neighbours);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            }</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;        }</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    };</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    findCut(findCut, s);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <span class="comment">// Edge with a node reachable from sink and another not reachable -&gt; s-t cut</span></div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;    <span class="keywordflow">for</span>(<span class="keyword">auto</span> &amp;[u , v] : forwardEdges) {</div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;        <span class="keywordflow">if</span>(vis[u] and !vis[v])</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;            minCuts.insert({u, v});</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    }</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160; </div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    <span class="keywordflow">return</span> minCuts;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;};</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160; </div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
-<div class="ttc" id="aalgorithm_8h_html_a1bf60db4f62f84db06c0ef4544dda51d"><div class="ttname"><a href="algorithm_8h.html#a1bf60db4f62f84db06c0ef4544dda51d">findFlow</a></div><div class="ttdeci">auto findFlow(int64_t s, int64_t t, vector&lt; vector&lt; int64_t &gt;&gt; &amp;residualCapacity, vector&lt; vector&lt; int64_t &gt;&gt; &amp;adj) -&gt; int64_t</div><div class="ttdoc">Finds the maximum flow in a flow network.</div><div class="ttdef"><b>Definition:</b> algorithm.h:68</div></div>
-<div class="ttc" id="aalgorithm_8h_html_a6e9c07823a98eb8c35157ba64ff40ecf"><div class="ttname"><a href="algorithm_8h.html#a6e9c07823a98eb8c35157ba64ff40ecf">augment_path</a></div><div class="ttdeci">auto augment_path(vector&lt; int64_t &gt;parent, int64_t best_flow, int64_t s, int64_t t, vector&lt; vector&lt; int64_t &gt;&gt; &amp;residualCapacity) -&gt; void</div><div class="ttdoc">Updates the residual capacty matrix using best_flow.</div><div class="ttdef"><b>Definition:</b> algorithm.h:49</div></div>
-<div class="ttc" id="aalgorithm_8h_html_af37e8c4ef249e575987784eac3983d61"><div class="ttname"><a href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">find_simple_path</a></div><div class="ttdeci">auto find_simple_path(int64_t source, int64_t sink, vector&lt; vector&lt; int64_t &gt;&gt; &amp;residualCapacity, vector&lt; vector&lt; int64_t &gt;&gt; &amp;adj) -&gt; pair&lt; vector&lt; int64_t &gt;, int64_t &gt;</div><div class="ttdoc">Finds the maximum flow along the current path.</div><div class="ttdef"><b>Definition:</b> algorithm.h:18</div></div>
+<div class="ttc" id="aalgorithm_8h_html_a706ed886b7e99051998b87de5327042f"><div class="ttname"><a href="algorithm_8h.html#a706ed886b7e99051998b87de5327042f">findFlow</a></div><div class="ttdeci">auto findFlow(int64_t s, int64_t t, vector&lt; vector&lt; int64_t &gt;&gt; &amp;residualCapacity, vector&lt; vector&lt; int64_t &gt;&gt; &amp;adj, set&lt; array&lt; int64_t, 2 &gt;&gt; &amp;forwardEdges) -&gt; int64_t</div><div class="ttdoc">Finds the maximum flow in a flow network.</div><div class="ttdef"><b>Definition:</b> algorithm.h:81</div></div>
+<div class="ttc" id="aalgorithm_8h_html_a5278b32354dd458746f25a298ee4097f"><div class="ttname"><a href="algorithm_8h.html#a5278b32354dd458746f25a298ee4097f">augment_path</a></div><div class="ttdeci">auto augment_path(vector&lt; int64_t &gt;parent, int64_t best_flow, int64_t s, int64_t t, vector&lt; vector&lt; int64_t &gt;&gt; &amp;residualCapacity, set&lt; array&lt; int64_t, 2 &gt;&gt; &amp;forwardEdges) -&gt; void</div><div class="ttdoc">Updates the residual capacty matrix using best_flow.</div><div class="ttdef"><b>Definition:</b> algorithm.h:53</div></div>
+<div class="ttc" id="aalgorithm_8h_html_aad2c9223068a16dc2e15ca152b884e94"><div class="ttname"><a href="algorithm_8h.html#aad2c9223068a16dc2e15ca152b884e94">minCut</a></div><div class="ttdeci">auto minCut(int64_t s, int64_t t, vector&lt; vector&lt; int64_t &gt;&gt; &amp;residualCapacity, vector&lt; vector&lt; int64_t &gt;&gt; &amp;adj, set&lt; array&lt; int64_t, 2 &gt;&gt; &amp;forwardEdges) -&gt; set&lt; array&lt; int64_t, 2 &gt;&gt;</div><div class="ttdoc">Finds the min cut of given graph.</div><div class="ttdef"><b>Definition:</b> algorithm.h:100</div></div>
+<div class="ttc" id="aalgorithm_8h_html_af37e8c4ef249e575987784eac3983d61"><div class="ttname"><a href="algorithm_8h.html#af37e8c4ef249e575987784eac3983d61">find_simple_path</a></div><div class="ttdeci">auto find_simple_path(int64_t source, int64_t sink, vector&lt; vector&lt; int64_t &gt;&gt; &amp;residualCapacity, vector&lt; vector&lt; int64_t &gt;&gt; &amp;adj) -&gt; pair&lt; vector&lt; int64_t &gt;, int64_t &gt;</div><div class="ttdoc">Finds the maximum flow along the current path.</div><div class="ttdef"><b>Definition:</b> algorithm.h:19</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

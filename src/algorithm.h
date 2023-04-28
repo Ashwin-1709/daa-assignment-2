@@ -15,7 +15,7 @@ map<array<int , 2>, int>flow;
 /// @param sink Destination node
 /// @param residualCapacity Matrix storing the residual capacities between nodes
 /// @param adj Graph represented by adjacency list
-/// @return Returns a pair containing a vector of parents and the current maximum flow
+/// @return A pair containing a vector of parents and the current maximum flow
 auto find_simple_path (int64_t source, int64_t sink, vector<vector<int64_t>>&residualCapacity, vector<vector<int64_t>>&adj) -> pair<vector<int64_t>, int64_t>{
     int N = residualCapacity.size();
     vector<int64_t>parent(N + 1, -1);
@@ -49,7 +49,7 @@ auto find_simple_path (int64_t source, int64_t sink, vector<vector<int64_t>>&res
 /// @param s Source Node
 /// @param t Destination Node
 /// @param residualCapacity Matrix storing the residual capacities between nodes
-/// @param set of forward edges in the graph
+/// @param forwardEdges Set of forward edges in the graph
 auto augment_path (vector<int64_t>parent, int64_t best_flow, int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, set<array<int64_t, 2>>&forwardEdges) -> void {
     int cur_node = t;
     vector<int>path;
@@ -76,8 +76,8 @@ auto augment_path (vector<int64_t>parent, int64_t best_flow, int64_t s, int64_t 
 /// @param t Destination Node
 /// @param residualCapacity Matrix storing the residual capacities between nodes
 /// @param adj Graph represented by adjacency list
-/// @return Returns the maximum flow from source node to destination node
-/// @param set of forward edges in the graph
+/// @param forwardEdges Set of forward edges in the graph
+/// @return Maximum flow from source node to destination node
 auto findFlow(int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, vector<vector<int64_t>>&adj, set<array<int64_t, 2>>&forwardEdges) -> int64_t {
     int64_t flow = 0;
     while(true) {
@@ -90,7 +90,13 @@ auto findFlow(int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, ve
     return flow;
 };
 
-
+/// @brief Finds the min cut of given graph
+/// @param s Source Node
+/// @param t Destination Node
+/// @param residualCapacity Matrix storing the residual capacities between nodes
+/// @param adj Graph represented by adjacency list
+/// @param forwardEdges Set of forward edges in the graph
+/// @return Min Cut of the graph
 auto minCut(int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, vector<vector<int64_t>>&adj, set<array<int64_t, 2>>&forwardEdges) -> set<array<int64_t, 2>> {
     int N = (int)residualCapacity.size() + 1;
     // To find the mincut, we compute the reachability of every vertice from sink
