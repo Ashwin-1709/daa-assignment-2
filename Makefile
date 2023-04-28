@@ -1,16 +1,16 @@
 CXX = g++
 CXXFLAGS = -Wall -Wshadow -Wconversion -Wpedantic -Wno-float-equal -Wno-variadic-macros
 
-all: ford segmented
+all: bipartite flow segmented
 
-ford: src/algorithm.hpp src/algorithm.cpp src/ford-fulkerson-bipartite.cpp src/ford-fulkerson-flow.cpp
-	mkdir -p bin
-	$(CXX) $(CXXFLAGS) src/algorithm.cpp src/ford-fulkerson-bipartite.cpp -o bin/ford-fulkerson-bipartite
-	$(CXX) $(CXXFLAGS) src/algorithm.cpp src/ford-fulkerson-flow.cpp -o bin/ford-fulkerson-flow
+bipartite: src/algorithm.hpp src/algorithm.cpp src/ford-fulkerson-bipartite.cpp
+	$(CXX) $(CXXFLAGS) src/algorithm.cpp src/ford-fulkerson-bipartite.cpp -o $@
+
+flow: src/algorithm.hpp src/algorithm.cpp src/ford-fulkerson-flow.cpp
+	$(CXX) $(CXXFLAGS) src/algorithm.cpp src/ford-fulkerson-flow.cpp -o $@
 
 segmented: src/segmented-least-squares.cpp
-	mkdir -p bin
-	$(CXX) $(CXXFLAGS) src/segmented-least-squares.cpp -o bin/segmented-least-squares
+	$(CXX) $(CXXFLAGS) src/segmented-least-squares.cpp -o $@
 
 clean:
-	rm -rf bin
+	rm -rf bipartite flow segmented

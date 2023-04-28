@@ -5,3 +5,6 @@
 bin
 .cache
 compile_commands.json
+bipartite
+flow
+segmented
