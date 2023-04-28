@@ -8,15 +8,17 @@ int32_t main() {
     int N , M;
     cin >> N >> M;
     vector<vector<int64_t>>adj(N + 1), residualCapacity(N + 2 , vector<int64_t>(N + 2));
-
+    set<array<int64_t , 2>>forwardEdgeSet, matchingEdges;
     for(int i = 0 ; i < M ; i++) {
-        int64_t source, dest;
+        int64_t source, dest; 
         cin >> source >> dest;
+        forwardEdgeSet.insert({source, dest});
         adj[source].push_back(dest);
         adj[dest].push_back(source);
     }
 
     vector<vector<int64_t>>bipAdj(N + 2), forwardBip(N + 2);
+    
     int64_t source = 0, sink = N + 1;
 
     vector<int>col(N + 1, -1);
@@ -34,14 +36,14 @@ int32_t main() {
     vector<int>red, blue;
     for(int node = 1; node <= N ; node++)
         col[node] ? red.push_back(node) : blue.push_back(node);
-
+    
 
     for(auto &redNodes : red) {
         bipAdj[0].push_back(redNodes);
         bipAdj[redNodes].push_back(0);
         residualCapacity[0][redNodes]++;
         for(auto &blueNodes : adj[redNodes]) {
-            if(col[blueNodes])
+            if(col[blueNodes]) 
                 continue;
             bipAdj[redNodes].push_back(blueNodes);
             bipAdj[blueNodes].push_back(redNodes);
@@ -56,15 +58,16 @@ int32_t main() {
         residualCapacity[blueNodes][N + 1]++;
     }
 
-    auto flow = findFlow(0, N + 1, residualCapacity, bipAdj);
+    auto flow = findFlow(0, N + 1, residualCapacity, bipAdj, forwardEdgeSet);
     cout << flow << '\n';
 
-    set<array<int64_t , 2>>edges;
-    for(auto &blueNodes : blue) {
-        for(auto &redNodes : adj[blueNodes])
-            if(residualCapacity[blueNodes][redNodes]) edges.insert({redNodes, blueNodes});
+    for(int i = 1 ; i <= N ; i++) {
+        for(auto &forwardEdge : forwardBip[i]) {
+            if(residualCapacity[i][forwardEdge] == 0)
+                matchingEdges.insert({i, forwardEdge});
+        }
     }
 
-    for(auto &[redNodes, blueNodes] : edges)
+    for(auto &[redNodes, blueNodes] : matchingEdges)
         cout << redNodes << ' ' << blueNodes << '\n';
 }
