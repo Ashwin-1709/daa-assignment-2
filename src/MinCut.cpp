@@ -28,7 +28,7 @@ int32_t main() {
     // To find the mincut, we compute the reachability of every vertice from sink
     auto findCut = [&](auto &&findCut, int64_t src) -> void{
         vis[src] = 1;
-        for(auto &neighbours:adj[src]){
+        for(auto &neighbours : adj[src]){
             if(residualCapacity[src][neighbours] > 0 && !vis[neighbours]){
                 findCut(findCut, neighbours);
             }
@@ -37,12 +37,9 @@ int32_t main() {
     findCut(findCut, s);
 
     // Edge with a node reachable from sink and another not reachable -> s-t cut
-    for(int i = 1 ; i <= N ; i++) {
-        for(int j = 1 ; j <= N ; j++) {
-            if(i == j) continue;
-            if(vis[i] and !vis[j] and forwardEdgeSet.count({i, j}))
-                minCut.insert({i , j});
-        }
+    for(auto &[u , v] : forwardEdgeSet) {
+        if(vis[u] and !vis[v])
+            minCut.insert({u, v});
     }
 
     cout << minCut.size() << '\n';
