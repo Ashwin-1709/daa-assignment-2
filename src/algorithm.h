@@ -91,4 +91,29 @@ auto findFlow(int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, ve
 };
 
 
+auto minCut(int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, vector<vector<int64_t>>&adj, set<array<int64_t, 2>>&forwardEdges) -> set<array<int64_t, 2>> {
+    int N = (int)residualCapacity.size() + 1;
+    // To find the mincut, we compute the reachability of every vertice from sink
+    vector<int64_t> vis(N+1);
+    set<array<int64_t, 2>> minCuts;
+    auto findCut = [&](auto &&findCut, int64_t src) -> void{
+        vis[src] = 1;
+        for(auto &neighbours : adj[src]){
+            if(residualCapacity[src][neighbours] > 0 && !vis[neighbours]){
+                findCut(findCut, neighbours);
+            }
+        }
+    };
+    findCut(findCut, s);
+
+    // Edge with a node reachable from sink and another not reachable -> s-t cut
+    for(auto &[u , v] : forwardEdges) {
+        if(vis[u] and !vis[v])
+            minCuts.insert({u, v});
+    }
+
+    return minCuts;
+};
+
+
 #endif

@@ -20,5 +20,14 @@ int32_t main() {
     int64_t flow = 0;
     int64_t s, t; cin >> s >> t; 
     // Ford Fulkerson Max flow
+    cout << "Flow : " << '\n';
     cout << findFlow(s, t, residualCapacity, adj, forwardEdgeSet) << '\n';
+
+    // min cut
+    auto minCuts = minCut(s, t, residualCapacity, adj, forwardEdgeSet);
+    cout << "Min cuts : ";
+    cout << minCuts.size() << '\n';
+
+    for(auto &[u , v] : minCuts)
+        cout << u << ' ' << v << '\n';
 }
