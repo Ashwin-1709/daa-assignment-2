@@ -8,6 +8,7 @@
 using namespace std;
 
 const int64_t MAX_FLOW = INT64_MAX;
+map<array<int , 2>, int>flow;
 
 /// @brief Finds the maximum flow along the current path
 /// @param source Source node
@@ -46,12 +47,17 @@ auto find_simple_path (int64_t source, int64_t sink, vector<vector<int64_t>>&res
 /// @param s Source Node
 /// @param t Destination Node
 /// @param residualCapacity Matrix storing the residual capacities between nodes
-auto augment_path (vector<int64_t>parent, int64_t best_flow, int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity) -> void {
+/// @param set of forward edges in the graph
+auto augment_path (vector<int64_t>parent, int64_t best_flow, int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, set<array<int64_t, 2>>&forwardEdges) -> void {
     int cur_node = t;
     vector<int>path;
     while(cur_node != s) {
         path.push_back(cur_node);
         int back_node = parent[cur_node];
+        
+        if(forwardEdges.count({back_node, cur_node})) {
+            flow[{back_node, cur_node}] += best_flow;
+        } else flow[{back_node, cur_node}] -= best_flow;
         residualCapacity[back_node][cur_node] -= best_flow;
         residualCapacity[cur_node][back_node] += best_flow;
         cur_node = back_node;
@@ -65,16 +71,18 @@ auto augment_path (vector<int64_t>parent, int64_t best_flow, int64_t s, int64_t 
 /// @param residualCapacity Matrix storing the residual capacities between nodes
 /// @param adj Graph represented by adjacency list
 /// @return Returns the maximum flow from source node to destination node
-auto findFlow(int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, vector<vector<int64_t>>&adj) -> int64_t {
+/// @param set of forward edges in the graph
+auto findFlow(int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, vector<vector<int64_t>>&adj, set<array<int64_t, 2>>&forwardEdges) -> int64_t {
     int64_t flow = 0;
     while(true) {
         auto [parent, best_flow] = find_simple_path(s, t, residualCapacity, adj);
         if(!best_flow)
             break;
-        augment_path(parent, best_flow, s, t, residualCapacity);
+        augment_path(parent, best_flow, s, t, residualCapacity, forwardEdges);
         flow += best_flow;
     }
     return flow;
 };
+
 
 #endif
