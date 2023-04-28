@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2023-04-29 Sat 04:30 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CS F364 Assignment 2</title>
+<meta name="author" content="Chinmay Dalal (2020A7PS2060H), Ashwin Pugalia(2020A7PS1080H), Deep Chordia(2020A7PS2073H), Yash Ratnani(2020A7PS0039H)" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">CS F364 Assignment 2</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgba20943">1. Ford-Fulkerson Algorithm</a>
+<ul>
+<li><a href="#orgf8da5cc">1.1. Description</a>
+<ul>
+<li><a href="#org26c629d">1.1.1. Problem statement</a></li>
+<li><a href="#org61df2a2">1.1.2. Algorithm</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgd918218">2. Segmented Least Squares</a>
+<ul>
+<li><a href="#orga6ab42a">2.1. Description</a>
+<ul>
+<li><a href="#org5e2f8eb">2.1.1. Problem statement</a></li>
+<li><a href="#org56ecc58">2.1.2. Algorithm</a></li>
+<li><a href="#org554cde3">2.1.3. Pseudocode</a></li>
+</ul>
+</li>
+<li><a href="#org6333a9c">2.2. Issues in coding</a></li>
+<li><a href="#org85f3518">2.3. Results</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgba20943" class="outline-2">
+<h2 id="orgba20943"><span class="section-number-2">1.</span> Ford-Fulkerson Algorithm</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-orgf8da5cc" class="outline-3">
+<h3 id="orgf8da5cc"><span class="section-number-3">1.1.</span> Description</h3>
+<div class="outline-text-3" id="text-1-1">
+</div>
+<div id="outline-container-org26c629d" class="outline-4">
+<h4 id="org26c629d"><span class="section-number-4">1.1.1.</span> Problem statement</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+The problem is to find the maximum flow of a flow network. It can be shown that this is equal to the minimum of the capacities of all possible <img src="/home/chinmay/.local/state/emacs/var/org/persist/f3/66f1ef-553c-4157-bd41-9a648c3d6b30-53a1f53834502d5d4e0755613823112e.svg" alt="\(s-t\)" style="height: 0.7828em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> cuts.
+</p>
+</div>
+</div>
+<div id="outline-container-org61df2a2" class="outline-4">
+<h4 id="org61df2a2"><span class="section-number-4">1.1.2.</span> Algorithm</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+First, we set the flow of each edge to zero. Then we look for an <i>augmenting</i> path from <img src="/home/chinmay/.local/state/emacs/var/org/persist/36/6c2340-66f2-461e-97ff-bb3205fc9fcf-c6ecc8a1c885106816998ffdca8bc0f0.svg" alt="\(s\)" style="height: 0.5203em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> to <img src="/home/chinmay/.local/state/emacs/var/org/persist/97/e46f45-fa8d-4120-b36a-3378ed61912d-ed444509afeb3a59be7512262de1220c.svg" alt="\(t\)" style="height: 0.7011em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" />. An augmenting path is a simple path in the residual graph, i.e. along the edges whose residual capacity is positive. If such a path is found, then we can increase the flow along these edges. We keep on searching for augmenting paths and increasing the flow. Once an augmenting path doesn't exist anymore, the flow is maximal.
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd918218" class="outline-2">
+<h2 id="orgd918218"><span class="section-number-2">2.</span> Segmented Least Squares</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orga6ab42a" class="outline-3">
+<h3 id="orga6ab42a"><span class="section-number-3">2.1.</span> Description</h3>
+<div class="outline-text-3" id="text-2-1">
+</div>
+<div id="outline-container-org5e2f8eb" class="outline-4">
+<h4 id="org5e2f8eb"><span class="section-number-4">2.1.1.</span> Problem statement</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Given a set P of n points in the plane, denoted <img src="/home/chinmay/.local/state/emacs/var/org/persist/55/88ca3c-ab79-4d79-8c11-611f02d5aa35-a6b0f178b3d5dc00b35ca6f4ee04139f.svg" alt="\((x_1,y_1), (x_2,y_2), (x_3,y_3), …, (x_n,y_n)\)" style="height: 1.0784em; vertical-align: -0.2942em; display: inline-block" class="org-latex org-latex-fragment" />; and suppose  <img src="/home/chinmay/.local/state/emacs/var/org/persist/1c/4c5c1e-6a98-4856-9f11-24c8c202616e-188540a2c3d98ea4967755e0b8b53ac2.svg" alt="\(x_1 &amp;lt; x_2 &amp;lt; …&amp;lt; x_n\)" style="height: 0.7737em; vertical-align: -0.1962em; display: inline-block" class="org-latex org-latex-fragment" />. 
+</p>
+
+<p>
+Given a line <img src="/home/chinmay/.local/state/emacs/var/org/persist/89/bd7d3e-c064-4c76-9562-f09e08035704-584137f5c8d9dbe9e60af83a95b6ae63.svg" alt="\(L\)" style="height: 0.7680em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> defined by the equation <img src="/home/chinmay/.local/state/emacs/var/org/persist/f0/6f5c80-cdbe-4717-9e4a-3da52ca76b33-3d09056c3830019f0af221ee20ed9297.svg" alt="\(y = ax + b\)" style="height: 0.9695em; vertical-align: -0.2397em; display: inline-block" class="org-latex org-latex-fragment" />, we say that the error wrt <img src="/home/chinmay/.local/state/emacs/var/org/persist/01/f4b168-ef90-4134-ae82-60387fc83afc-af8ee0d80313afd3d9677e0abf07466c.svg" alt="\(P\)" style="height: 0.7680em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> is sum of the its squared distances to the points in <img src="/home/chinmay/.local/state/emacs/var/org/persist/01/f4b168-ef90-4134-ae82-60387fc83afc-af8ee0d80313afd3d9677e0abf07466c.svg" alt="\(P\)" style="height: 0.7680em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" />
+</p>
+
+<p>
+A single line with the best fit for the points can be found using the well-known formula for linear regression. In the real world, a single line may not fit the dataset optimally, it may be a collection of line segments. Of course, if we have <img src="/home/chinmay/.local/state/emacs/var/org/persist/5d/150931-13a9-4205-bdd2-5881b0c77c51-261f3b026181847fe9c227a95e3c99c8.svg" alt="\(n-1\)" style="height: 0.8116em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> points then this collection has zero error. But this will overfit the data. Hence, we want to find a balance between minimizing error and minimizing the number of line segments. Formally, we want to minimize <img src="/home/chinmay/.local/state/emacs/var/org/persist/8d/19dedc-5365-478d-9c87-e8c94ddf2de0-1a936b2ee2d042ba82d960eea2315254.svg" alt="\(E+c\cdot L\)" style="height: 0.8497em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> where <img src="/home/chinmay/.local/state/emacs/var/org/persist/c7/2bcf2a-adcb-4ca3-b548-7ac74fb98ad8-7c5d13e6423a448627057c435d197266.svg" alt="\(c\)" style="height: 0.5203em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> is a given parameter called the <span class="underline">penalty per line</span>.
+</p>
+</div>
+</div>
+<div id="outline-container-org56ecc58" class="outline-4">
+<h4 id="org56ecc58"><span class="section-number-4">2.1.2.</span> Algorithm</h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+We used a dynamic programming approach with the following recurrence relation:
+<img src="/home/chinmay/.local/state/emacs/var/org/persist/cd/f27ccc-6ac6-453a-8899-bfe6b0c7a208-9ef94b0e5598a2198f57bde68fbf4bf6.svg" alt="\[\mathrm{OPT}(j) = \min_{1\le i \le j}{e_{i,j}+c+\mathrm{OPT}(i-1)}\]" style="height: 2.1393em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" />
+</p>
+
+<p>
+where
+</p>
+<ul class="org-ul">
+<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/b5/5b2865-17ac-43e9-a8ba-c0870304a21d-a8094ecf2b9b8dc88b4c6a993bf9aef0.svg" alt="\(\mathrm{OPT}(j)\)" style="height: 1.0784em; vertical-align: -0.2942em; display: inline-block" class="org-latex org-latex-fragment" /> is the optimum solution for the first <img src="/home/chinmay/.local/state/emacs/var/org/persist/ba/f6b249-21f0-476a-b2db-be1b0ee340ac-b4e60d1f8e32bb1ec8a1ccc23b33bb43.svg" alt="\(j\)" style="height: 0.9353em; vertical-align: -0.2397em; display: inline-block" class="org-latex org-latex-fragment" /> points</li>
+<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/14/877576-a1ad-4093-9f87-cf392432ad54-347c87791c86a3d2381118bf2fbf4061.svg" alt="\(i\)" style="height: 0.7447em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> is the starting point of the last line segment</li>
+<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/43/a285ac-5e0f-4167-92d1-461d0c5c956d-d2270772571b2deba45319233a8a0d44.svg" alt="\(e_{i,j}\)" style="height: 0.8007em; vertical-align: -0.3296em; display: inline-block" class="org-latex org-latex-fragment" /> is the error for the last line segment</li>
+<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/bd/dbe55e-e5f0-4465-8466-2314a9e5475f-58dc1fbed3be5f67f39888632398683a.svg" alt="\(\mathrm{OPT}(i-1)\)" style="height: 1.0784em; vertical-align: -0.2942em; display: inline-block" class="org-latex org-latex-fragment" /> is the error for the first <img src="/home/chinmay/.local/state/emacs/var/org/persist/61/5a1b47-b79a-490b-9334-4eb4228e8012-ff0f4589420264b03cd6b2d391ee8f23.svg" alt="\(i-1\)" style="height: 0.8264em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> points</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org554cde3" class="outline-4">
+<h4 id="org554cde3"><span class="section-number-4">2.1.3.</span> Pseudocode</h4>
+<div class="outline-text-4" id="text-2-1-3">
+<pre class="example" id="orgfa4c22b">
+Segmented-Least-Squares(n)
+    Array M[0..n]
+    Set M[0] = 0
+    For all pairs i &lt;= j # O(n^2)
+       Compute the least squares error for e(i, j) for the segment p_i,...,p_j # O(n)
+    Endfor
+    For j = 1, 2, ..., n
+       Use the recurrence relation to compute M[j] # O(n)
+    Endfor
+    Return M[n]
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-org6333a9c" class="outline-3">
+<h3 id="org6333a9c"><span class="section-number-3">2.2.</span> Issues in coding</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+The case where slope is infinity had to be handled separately as we were getting NaN/ <code>SIGFPU</code> otherwise.
+</p>
+</div>
+</div>
+<div id="outline-container-org85f3518" class="outline-3">
+<h3 id="org85f3518"><span class="section-number-3">2.3.</span> Results</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>Test case 1: 10 points, penalty per line = 3 - RSS = 13.6, no. of lines = 4</li>
+</ul>
+
+<div id="orgc22c602" class="figure">
+<p><img src="Segmented_Least_Squares/2023-04-28_23-49-54_screenshot.png" alt="2023-04-28_23-49-54_screenshot.png" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Test case 2: 11 points, penalty per line = 200 - RSS = 402.7, no. of lines = 2</li>
+</ul>
+
+<div id="org4722234" class="figure">
+<p><img src="Segmented_Least_Squares/2023-04-28_23-53-03_screenshot.png" alt="2023-04-28_23-53-03_screenshot.png" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Test case 3: 100 points, penalty per line = 94 - RSS = 4307.14, no. of lines = 44</li>
+</ul>
+
+<div id="org649e4ed" class="figure">
+<p><img src="Segmented_Least_Squares/2023-04-28_23-54-36_screenshot.png" alt="2023-04-28_23-54-36_screenshot.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Chinmay Dalal (2020A7PS2060H), Ashwin Pugalia(2020A7PS1080H), Deep Chordia(2020A7PS2073H), Yash Ratnani(2020A7PS0039H)</p>
+<p class="date">Created: 2023-04-29 Sat 04:30</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,54 @@
+#+title: CS F364 Assignment 2
+#+LATEX_HEADER: \usepackage{gensymb}
+#+options: tex:dvisvgm
+#+AUTHOR: Chinmay Dalal (2020A7PS2060H), Ashwin Pugalia(2020A7PS1080H), Deep Chordia(2020A7PS2073H), Yash Ratnani(2020A7PS0039H)
+* Ford-Fulkerson Algorithm
+** Description
+*** Problem statement
+The problem is to find the maximum flow of a flow network. It can be shown that this is equal to the minimum of the capacities of all possible \(s-t\) cuts.
+*** Algorithm
+First, we set the flow of each edge to zero. Then we look for an /augmenting/ path from \(s\) to \(t\). An augmenting path is a simple path in the residual graph, i.e. along the edges whose residual capacity is positive. If such a path is found, then we can increase the flow along these edges. We keep on searching for augmenting paths and increasing the flow. Once an augmenting path doesn't exist anymore, the flow is maximal.
+
+* Segmented Least Squares
+** Description
+*** Problem statement
+Given a set P of n points in the plane, denoted \((x_1,y_1), (x_2,y_2), (x_3,y_3), …, (x_n,y_n)\); and suppose  \(x_1 < x_2 < …< x_n\). 
+
+Given a line \(L\) defined by the equation \(y = ax + b\), we say that the error wrt \(P\) is sum of the its squared distances to the points in \(P\)
+
+A single line with the best fit for the points can be found using the well-known formula for linear regression. In the real world, a single line may not fit the dataset optimally, it may be a collection of line segments. Of course, if we have \(n-1\) points then this collection has zero error. But this will overfit the data. Hence, we want to find a balance between minimizing error and minimizing the number of line segments. Formally, we want to minimize \(E+c\cdot L\) where \(c\) is a given parameter called the _penalty per line_.
+*** Algorithm
+We used a dynamic programming approach with the following recurrence relation:
+\[\mathrm{OPT}(j) = \min_{1\le i \le j}{e_{i,j}+c+\mathrm{OPT}(i-1)}\]
+
+where
++ \(\mathrm{OPT}(j)\) is the optimum solution for the first \(j\) points
++ \(i\) is the starting point of the last line segment
++ \(e_{i,j}\) is the error for the last line segment
++ \(\mathrm{OPT}(i-1)\) is the error for the first \(i-1\) points
+*** Pseudocode
+#+BEGIN_EXAMPLE
+  Segmented-Least-Squares(n)
+      Array M[0..n]
+      Set M[0] = 0
+      For all pairs i <= j # O(n^2)
+         Compute the least squares error for e(i, j) for the segment p_i,...,p_j # O(n)
+      Endfor
+      For j = 1, 2, ..., n
+         Use the recurrence relation to compute M[j] # O(n)
+      Endfor
+      Return M[n]
+#+END_EXAMPLE
+** Issues in coding
+The case where slope is infinity had to be handled separately as we were getting NaN/ ~SIGFPU~ otherwise.
+** Results
++ Test case 1: 10 points, penalty per line = 3 - RSS = 13.6, no. of lines = 4
+#+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
+[[file:Segmented_Least_Squares/2023-04-28_23-49-54_screenshot.png]]
++ Test case 2: 11 points, penalty per line = 200 - RSS = 402.7, no. of lines = 2
+#+DOWNLOADED: screenshot @ 2023-04-28 23:53:03
+[[file:Segmented_Least_Squares/2023-04-28_23-53-03_screenshot.png]]
++ Test case 3: 100 points, penalty per line = 94 - RSS = 4307.14, no. of lines = 44
+#+DOWNLOADED: screenshot @ 2023-04-28 23:54:36
+[[file:Segmented_Least_Squares/2023-04-28_23-54-36_screenshot.png]]
+

@@ -6,7 +6,8 @@ num_line = int(input())
 fig = plt.figure()
 line_eq, partitions = list(), list()
 cur_col = 0
-col_arr = ['r', 'b']
+col_arr = ['r', 'b', "#a7d52a", "#dff429", "#f6c137", "#f25e40", "#c32a94", "#7328b6", "#3438bd", "#3f77c4", "#4daecf", "#52c67f", "#79c725"]
+sz = len(col_arr)
 x_min , x_max = 10 ** 10, -10 ** 10
 y_min, y_max = 10 ** 10, -10 ** 10
 for _ in range(num_line) : 
@@ -41,5 +42,6 @@ for _ in range(len(partitions)) :
         x_now = [x_min, x_max]
         y_now = [y_min_p, y_max_p]
         ax.plot(x_now, y_now, color = col_arr[cur_col])
-    cur_col ^= 1
+    cur_col += 1
+    cur_col %= sz
 plt.show()

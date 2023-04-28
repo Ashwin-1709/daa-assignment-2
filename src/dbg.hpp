@@ -1,6 +1,6 @@
 #ifndef DBG_H
 #define DBG_H
-#include "typedefs.hh"
+#include "typedefs.hpp"
 #include <iostream>
 template <typename A, typename B>
 auto operator<<(std::ostream &os, const std::pair<A, B> &p) -> std::ostream & {
