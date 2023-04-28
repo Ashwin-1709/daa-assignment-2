@@ -21,6 +21,7 @@ int32_t main() {
     
     int64_t source = 0, sink = N + 1;
 
+    // Coloring the bipartite graph using a depth first search
     vector<int>col(N + 1, -1);
     auto dfs_col = [&](auto &&f , int cur, int c) ->void {
         col[cur] = c;
@@ -33,11 +34,13 @@ int32_t main() {
 
     dfs_col(dfs_col, 1, 0);
 
+    // After coloring vertices are split in two sets, blue and red
     vector<int>red, blue;
     for(int node = 1; node <= N ; node++)
         col[node] ? red.push_back(node) : blue.push_back(node);
     
 
+    // We create a dummy souce and add edge from soucr to red nodes
     for(auto &redNodes : red) {
         bipAdj[0].push_back(redNodes);
         bipAdj[redNodes].push_back(0);
@@ -52,12 +55,15 @@ int32_t main() {
         }
     }
 
+    // similarly dummy sink, add edges from blue nodes to the sink
+    // edge capacity -> 1
     for(auto &blueNodes : blue) {
         bipAdj[N + 1].push_back(blueNodes);
         bipAdj[blueNodes].push_back(N + 1);
         residualCapacity[blueNodes][N + 1]++;
     }
 
+    // Find th
     auto flow = findFlow(0, N + 1, residualCapacity, bipAdj, forwardEdgeSet);
     cout << flow << '\n';
 

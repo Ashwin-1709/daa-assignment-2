@@ -23,15 +23,17 @@ auto find_simple_path (int64_t source, int64_t sink, vector<vector<int64_t>>&res
 
     parent[source] = source;
     Q.push({MAX_FLOW, source});
-
+    // finds a simple path from sink with non zero flow
     while(!Q.empty()) {
         auto [cur_flow, cur_node] = Q.front();
         Q.pop();
         if(cur_node == sink)
             return {parent, cur_flow};
         for(auto &neighbours : adj[cur_node]) {
+            // if residual capacity > 0 and not visited, visit it
             if(parent[neighbours] == -1 and residualCapacity[cur_node][neighbours] > 0) {
                 parent[neighbours] = cur_node;
+                // update the best flow
                 int64_t best_flow = min(cur_flow, residualCapacity[cur_node][neighbours]);
                 Q.push({best_flow, neighbours});
             }
@@ -51,13 +53,17 @@ auto find_simple_path (int64_t source, int64_t sink, vector<vector<int64_t>>&res
 auto augment_path (vector<int64_t>parent, int64_t best_flow, int64_t s, int64_t t, vector<vector<int64_t>>&residualCapacity, set<array<int64_t, 2>>&forwardEdges) -> void {
     int cur_node = t;
     vector<int>path;
+    // backtracking the path
     while(cur_node != s) {
         path.push_back(cur_node);
         int back_node = parent[cur_node];
-        
+        // if forward edge -> decrease the flow
+        // if backward edge -> increase the flow
         if(forwardEdges.count({back_node, cur_node})) {
-            flow[{back_node, cur_node}] += best_flow;
-        } else flow[{back_node, cur_node}] -= best_flow;
+            flow[{back_node, cur_node}] -= best_flow;
+        } else flow[{back_node, cur_node}] += best_flow;
+
+        // update the residual capacities
         residualCapacity[back_node][cur_node] -= best_flow;
         residualCapacity[cur_node][back_node] += best_flow;
         cur_node = back_node;

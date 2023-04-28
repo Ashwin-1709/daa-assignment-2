@@ -19,6 +19,6 @@ int32_t main() {
 
     int64_t flow = 0;
     int64_t s, t; cin >> s >> t; 
-
+    // Ford Fulkerson Max flow
     cout << findFlow(s, t, residualCapacity, adj, forwardEdgeSet) << '\n';
 }
