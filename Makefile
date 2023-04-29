@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Wshadow -Wconversion -Wpedantic -Wno-float-equal -Wno-variadic-macros
+CXXFLAGS = -Wall -g #-Wshadow -Wconversion -Wpedantic -Wno-float-equal -Wno-variadic-macros
 
 all: bipartite flow segmented
 
