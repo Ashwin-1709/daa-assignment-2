@@ -33,7 +33,10 @@ int32_t main() {
         }
     };
 
-    dfs_col(dfs_col, 1, 0);
+    for(int i = 1 ; i <= N ; i++) {
+        if(col[i] == -1) 
+            dfs_col(dfs_col, i , 0);
+    }
 
     // After coloring vertices are split in two sets, blue and red
     std::vector<int> red, blue;
