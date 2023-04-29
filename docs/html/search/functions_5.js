@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['main_23',['main',['../Ford-Fulkerson-Bipartite_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;Ford-Fulkerson-Bipartite.cpp'],['../Ford-Fulkerson-Flow_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;Ford-Fulkerson-Flow.cpp'],['../segment-least-squares_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;segment-least-squares.cpp']]],
-  ['mincut_24',['minCut',['../algorithm_8h.html#aad2c9223068a16dc2e15ca152b884e94',1,'algorithm.h']]]
+  ['main_22',['main',['../ford-fulkerson-bipartite_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;ford-fulkerson-bipartite.cpp'],['../ford-fulkerson-flow_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;ford-fulkerson-flow.cpp'],['../segmented-least-squares_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;segmented-least-squares.cpp']]],
+  ['mincut_23',['minCut',['../algorithm_8hpp.html#a99c9a3ec3a03c855b5a81ccb31290ba8',1,'algorithm.cpp']]]
 ];

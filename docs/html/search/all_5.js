@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['implementation_20of_20ford_20fulkerson_20algorithm_20and_20segmented_20least_20squares_20algorithm_9',['Implementation of Ford Fulkerson Algorithm and Segmented Least Squares Algorithm',['../index.html',1,'']]]
+  ['main_9',['main',['../ford-fulkerson-bipartite_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;ford-fulkerson-bipartite.cpp'],['../ford-fulkerson-flow_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;ford-fulkerson-flow.cpp'],['../segmented-least-squares_8cpp.html#a196718f834091385d38586a0ce4009dc',1,'main():&#160;segmented-least-squares.cpp']]],
+  ['mincut_10',['minCut',['../algorithm_8hpp.html#a99c9a3ec3a03c855b5a81ccb31290ba8',1,'algorithm.cpp']]]
 ];

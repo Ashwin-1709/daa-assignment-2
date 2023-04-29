@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['segment_2dleast_2dsquares_2ecpp_16',['segment-least-squares.cpp',['../segment-least-squares_8cpp.html',1,'']]]
+  ['segmented_2dleast_2dsquares_2ecpp_15',['segmented-least-squares.cpp',['../segmented-least-squares_8cpp.html',1,'']]]
 ];

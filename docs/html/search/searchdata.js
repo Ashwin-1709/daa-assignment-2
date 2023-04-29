@@ -1,24 +1,21 @@
 var indexSectionsWithContent =
 {
-  0: "adefgims",
+  0: "adefgms",
   1: "afs",
-  2: "adefgm",
-  3: "i"
+  2: "adefgm"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "files",
-  2: "functions",
-  3: "pages"
+  2: "functions"
 };
 
 var indexSectionLabels =
 {
   0: "All",
   1: "Files",
-  2: "Functions",
-  3: "Pages"
+  2: "Functions"
 };
 
