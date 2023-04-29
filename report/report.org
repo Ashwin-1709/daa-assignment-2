@@ -5,10 +5,33 @@
 * Ford-Fulkerson Algorithm
 ** Description
 *** Problem statement
-The problem is to find the maximum flow of a flow network. It can be shown that this is equal to the minimum of the capacities of all possible \(s-t\) cuts.
+**** Minimal cut
+The problem is to find the maximum flow of a flow network. It can be shown that this is equal to the minimum of the capacities of all possible \(s-t\) cut. Therefore we want to find the minimal cut.
+**** Bipartite matching
+A matching in a bipartite graph is a set of the edges chosen in such a way that no two edges share an endpoint. A maximum matching is a matching of maximum size (maximum number of edges). In a maximum matching, if any edge is added to it, it is no longer a matching. There can be more than one maximum matchings for a given bipartite graph. The maximum matching can also be found by converting into the flow problem described above
 *** Algorithm
 First, we set the flow of each edge to zero. Then we look for an /augmenting/ path from \(s\) to \(t\). An augmenting path is a simple path in the residual graph, i.e. along the edges whose residual capacity is positive. If such a path is found, then we can increase the flow along these edges. We keep on searching for augmenting paths and increasing the flow. Once an augmenting path doesn't exist anymore, the flow is maximal.
-
+** Results
+*** Minimal cut
++ Test case 1
+#+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
+[[file:flows_and_cuts/flow2.png]]
++ Test case 2
+#+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
+[[file:flows_and_cuts/flow3.png]]
++ Test case 3
+#+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
+[[file:flows_and_cuts/flow4.png]]
+*** Bipartite matching
++ Test case 1
+#+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
+[[file:bipartite_matching/bip1.png]]
++ Test case 2
+#+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
+[[file:bipartite_matching/bip2.png]]
++ Test case 3
+#+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
+[[file:bipartite_matching/bip3.png]]
 * Segmented Least Squares
 ** Description
 *** Problem statement
@@ -42,13 +65,25 @@ where
 ** Issues in coding
 The case where slope is infinity had to be handled separately as we were getting NaN/ ~SIGFPU~ otherwise.
 ** Results
-+ Test case 1: 10 points, penalty per line = 3 - RSS = 13.6, no. of lines = 4
++ Test case 1
+
+  Input: 10 points, penalty per line = 3
+  
+  Output: RSS = 13.6, no. of lines = 4
 #+DOWNLOADED: screenshot @ 2023-04-28 23:49:54
 [[file:Segmented_Least_Squares/2023-04-28_23-49-54_screenshot.png]]
-+ Test case 2: 11 points, penalty per line = 200 - RSS = 402.7, no. of lines = 2
++ Test case 2
+
+  Input: 11 points, penalty per line = 200
+  
+  Output: RSS = 402.7, no. of lines = 2
 #+DOWNLOADED: screenshot @ 2023-04-28 23:53:03
 [[file:Segmented_Least_Squares/2023-04-28_23-53-03_screenshot.png]]
-+ Test case 3: 100 points, penalty per line = 94 - RSS = 4307.14, no. of lines = 44
++ Test case 3
+
+  Input: 100 points, penalty per line = 94
+  
+  Output: RSS = 4307.14, no. of lines = 44
 #+DOWNLOADED: screenshot @ 2023-04-28 23:54:36
 [[file:Segmented_Least_Squares/2023-04-28_23-54-36_screenshot.png]]
 

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-29 Sat 04:30 -->
+<!-- 2023-04-29 Sat 12:58 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CS F364 Assignment 2</title>
@@ -201,106 +201,187 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgba20943">1. Ford-Fulkerson Algorithm</a>
+<li><a href="#org227180c">1. Ford-Fulkerson Algorithm</a>
 <ul>
-<li><a href="#orgf8da5cc">1.1. Description</a>
+<li><a href="#orga23cb3a">1.1. Description</a>
 <ul>
-<li><a href="#org26c629d">1.1.1. Problem statement</a></li>
-<li><a href="#org61df2a2">1.1.2. Algorithm</a></li>
+<li><a href="#orga9e6959">1.1.1. Problem statement</a></li>
+<li><a href="#org3d7f03a">1.1.2. Algorithm</a></li>
+</ul>
+</li>
+<li><a href="#org9703ef8">1.2. Results</a>
+<ul>
+<li><a href="#orga810585">1.2.1. Minimal cut</a></li>
+<li><a href="#org3c62561">1.2.2. Bipartite matching</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgd918218">2. Segmented Least Squares</a>
+<li><a href="#orgce00df0">2. Segmented Least Squares</a>
 <ul>
-<li><a href="#orga6ab42a">2.1. Description</a>
+<li><a href="#orgb0de6f4">2.1. Description</a>
 <ul>
-<li><a href="#org5e2f8eb">2.1.1. Problem statement</a></li>
-<li><a href="#org56ecc58">2.1.2. Algorithm</a></li>
-<li><a href="#org554cde3">2.1.3. Pseudocode</a></li>
+<li><a href="#org59634f6">2.1.1. Problem statement</a></li>
+<li><a href="#orgd1342d7">2.1.2. Algorithm</a></li>
+<li><a href="#org40cee27">2.1.3. Pseudocode</a></li>
 </ul>
 </li>
-<li><a href="#org6333a9c">2.2. Issues in coding</a></li>
-<li><a href="#org85f3518">2.3. Results</a></li>
+<li><a href="#org5e9405c">2.2. Issues in coding</a></li>
+<li><a href="#orgd5281ef">2.3. Results</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgba20943" class="outline-2">
-<h2 id="orgba20943"><span class="section-number-2">1.</span> Ford-Fulkerson Algorithm</h2>
+<div id="outline-container-org227180c" class="outline-2">
+<h2 id="org227180c"><span class="section-number-2">1.</span> Ford-Fulkerson Algorithm</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orgf8da5cc" class="outline-3">
-<h3 id="orgf8da5cc"><span class="section-number-3">1.1.</span> Description</h3>
+<div id="outline-container-orga23cb3a" class="outline-3">
+<h3 id="orga23cb3a"><span class="section-number-3">1.1.</span> Description</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-org26c629d" class="outline-4">
-<h4 id="org26c629d"><span class="section-number-4">1.1.1.</span> Problem statement</h4>
+<div id="outline-container-orga9e6959" class="outline-4">
+<h4 id="orga9e6959"><span class="section-number-4">1.1.1.</span> Problem statement</h4>
 <div class="outline-text-4" id="text-1-1-1">
+</div>
+<ol class="org-ol">
+<li><a id="org2f7d93b"></a>Minimal cut<br />
+<div class="outline-text-5" id="text-1-1-1-1">
 <p>
-The problem is to find the maximum flow of a flow network. It can be shown that this is equal to the minimum of the capacities of all possible <img src="/home/chinmay/.local/state/emacs/var/org/persist/f3/66f1ef-553c-4157-bd41-9a648c3d6b30-53a1f53834502d5d4e0755613823112e.svg" alt="\(s-t\)" style="height: 0.7828em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> cuts.
+The problem is to find the maximum flow of a flow network. It can be shown that this is equal to the minimum of the capacities of all possible <img src="ltximg/report_6c673d5fbf0314f1c28accfd7cee932f0b22a832.svg" alt="\(s-t\)" class="org-svg" /> cut. Therefore we want to find the minimal cut.
 </p>
 </div>
+</li>
+<li><a id="org7e6b9a2"></a>Bipartite matching<br />
+<div class="outline-text-5" id="text-1-1-1-2">
+<p>
+A matching in a bipartite graph is a set of the edges chosen in such a way that no two edges share an endpoint. A maximum matching is a matching of maximum size (maximum number of edges). In a maximum matching, if any edge is added to it, it is no longer a matching. There can be more than one maximum matchings for a given bipartite graph. The maximum matching can also be found by converting into the flow problem described above
+</p>
 </div>
-<div id="outline-container-org61df2a2" class="outline-4">
-<h4 id="org61df2a2"><span class="section-number-4">1.1.2.</span> Algorithm</h4>
+</li>
+</ol>
+</div>
+<div id="outline-container-org3d7f03a" class="outline-4">
+<h4 id="org3d7f03a"><span class="section-number-4">1.1.2.</span> Algorithm</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
-First, we set the flow of each edge to zero. Then we look for an <i>augmenting</i> path from <img src="/home/chinmay/.local/state/emacs/var/org/persist/36/6c2340-66f2-461e-97ff-bb3205fc9fcf-c6ecc8a1c885106816998ffdca8bc0f0.svg" alt="\(s\)" style="height: 0.5203em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> to <img src="/home/chinmay/.local/state/emacs/var/org/persist/97/e46f45-fa8d-4120-b36a-3378ed61912d-ed444509afeb3a59be7512262de1220c.svg" alt="\(t\)" style="height: 0.7011em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" />. An augmenting path is a simple path in the residual graph, i.e. along the edges whose residual capacity is positive. If such a path is found, then we can increase the flow along these edges. We keep on searching for augmenting paths and increasing the flow. Once an augmenting path doesn't exist anymore, the flow is maximal.
+First, we set the flow of each edge to zero. Then we look for an <i>augmenting</i> path from <img src="ltximg/report_a743feb035b8a49a125d88122e4df96ef8872ab5.svg" alt="\(s\)" class="org-svg" /> to <img src="ltximg/report_8c1d38caa53d34773e54c247fc0d3d2ffe9400e2.svg" alt="\(t\)" class="org-svg" />. An augmenting path is a simple path in the residual graph, i.e. along the edges whose residual capacity is positive. If such a path is found, then we can increase the flow along these edges. We keep on searching for augmenting paths and increasing the flow. Once an augmenting path doesn't exist anymore, the flow is maximal.
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org9703ef8" class="outline-3">
+<h3 id="org9703ef8"><span class="section-number-3">1.2.</span> Results</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-orga810585" class="outline-4">
+<h4 id="orga810585"><span class="section-number-4">1.2.1.</span> Minimal cut</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ul class="org-ul">
+<li>Test case 1</li>
+</ul>
+
+<div id="orgfac58f3" class="figure">
+<p><img src="flows_and_cuts/flow2.png" alt="flow2.png" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Test case 2</li>
+</ul>
+
+<div id="orgf754421" class="figure">
+<p><img src="flows_and_cuts/flow3.png" alt="flow3.png" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Test case 3</li>
+</ul>
+
+<div id="orgc2118d0" class="figure">
+<p><img src="flows_and_cuts/flow4.png" alt="flow4.png" />
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org3c62561" class="outline-4">
+<h4 id="org3c62561"><span class="section-number-4">1.2.2.</span> Bipartite matching</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ul class="org-ul">
+<li>Test case 1</li>
+</ul>
+
+<div id="org0858a5f" class="figure">
+<p><img src="bipartite_matching/bip1.png" alt="bip1.png" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Test case 2</li>
+</ul>
+
+<div id="org91ebace" class="figure">
+<p><img src="bipartite_matching/bip2.png" alt="bip2.png" />
+</p>
+</div>
+<ul class="org-ul">
+<li>Test case 3</li>
+</ul>
+
+<div id="org2a3aaf5" class="figure">
+<p><img src="bipartite_matching/bip3.png" alt="bip3.png" />
 </p>
 </div>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgd918218" class="outline-2">
-<h2 id="orgd918218"><span class="section-number-2">2.</span> Segmented Least Squares</h2>
+</div>
+<div id="outline-container-orgce00df0" class="outline-2">
+<h2 id="orgce00df0"><span class="section-number-2">2.</span> Segmented Least Squares</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga6ab42a" class="outline-3">
-<h3 id="orga6ab42a"><span class="section-number-3">2.1.</span> Description</h3>
+<div id="outline-container-orgb0de6f4" class="outline-3">
+<h3 id="orgb0de6f4"><span class="section-number-3">2.1.</span> Description</h3>
 <div class="outline-text-3" id="text-2-1">
 </div>
-<div id="outline-container-org5e2f8eb" class="outline-4">
-<h4 id="org5e2f8eb"><span class="section-number-4">2.1.1.</span> Problem statement</h4>
+<div id="outline-container-org59634f6" class="outline-4">
+<h4 id="org59634f6"><span class="section-number-4">2.1.1.</span> Problem statement</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
-Given a set P of n points in the plane, denoted <img src="/home/chinmay/.local/state/emacs/var/org/persist/55/88ca3c-ab79-4d79-8c11-611f02d5aa35-a6b0f178b3d5dc00b35ca6f4ee04139f.svg" alt="\((x_1,y_1), (x_2,y_2), (x_3,y_3), …, (x_n,y_n)\)" style="height: 1.0784em; vertical-align: -0.2942em; display: inline-block" class="org-latex org-latex-fragment" />; and suppose  <img src="/home/chinmay/.local/state/emacs/var/org/persist/1c/4c5c1e-6a98-4856-9f11-24c8c202616e-188540a2c3d98ea4967755e0b8b53ac2.svg" alt="\(x_1 &amp;lt; x_2 &amp;lt; …&amp;lt; x_n\)" style="height: 0.7737em; vertical-align: -0.1962em; display: inline-block" class="org-latex org-latex-fragment" />. 
+Given a set P of n points in the plane, denoted <img src="ltximg/report_0dcce5420d83f5431dd30e3fadb97dbc0eb201fe.svg" alt="\((x_1,y_1), (x_2,y_2), (x_3,y_3), …, (x_n,y_n)\)" class="org-svg" />; and suppose  <img src="ltximg/report_a897a414729d8d676b10d8956d489273178938ea.svg" alt="\(x_1 &amp;lt; x_2 &amp;lt; …&amp;lt; x_n\)" class="org-svg" />. 
 </p>
 
 <p>
-Given a line <img src="/home/chinmay/.local/state/emacs/var/org/persist/89/bd7d3e-c064-4c76-9562-f09e08035704-584137f5c8d9dbe9e60af83a95b6ae63.svg" alt="\(L\)" style="height: 0.7680em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> defined by the equation <img src="/home/chinmay/.local/state/emacs/var/org/persist/f0/6f5c80-cdbe-4717-9e4a-3da52ca76b33-3d09056c3830019f0af221ee20ed9297.svg" alt="\(y = ax + b\)" style="height: 0.9695em; vertical-align: -0.2397em; display: inline-block" class="org-latex org-latex-fragment" />, we say that the error wrt <img src="/home/chinmay/.local/state/emacs/var/org/persist/01/f4b168-ef90-4134-ae82-60387fc83afc-af8ee0d80313afd3d9677e0abf07466c.svg" alt="\(P\)" style="height: 0.7680em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> is sum of the its squared distances to the points in <img src="/home/chinmay/.local/state/emacs/var/org/persist/01/f4b168-ef90-4134-ae82-60387fc83afc-af8ee0d80313afd3d9677e0abf07466c.svg" alt="\(P\)" style="height: 0.7680em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" />
+Given a line <img src="ltximg/report_55a25577ab691f91c34b1f8d96ed6b2b95cda23a.svg" alt="\(L\)" class="org-svg" /> defined by the equation <img src="ltximg/report_31e6b7a0833f87a822451c62bdce793c79598daf.svg" alt="\(y = ax + b\)" class="org-svg" />, we say that the error wrt <img src="ltximg/report_cc86f01d14a4a89b5c9cabdf01fd1b71604ee7ef.svg" alt="\(P\)" class="org-svg" /> is sum of the its squared distances to the points in <img src="ltximg/report_cc86f01d14a4a89b5c9cabdf01fd1b71604ee7ef.svg" alt="\(P\)" class="org-svg" />
 </p>
 
 <p>
-A single line with the best fit for the points can be found using the well-known formula for linear regression. In the real world, a single line may not fit the dataset optimally, it may be a collection of line segments. Of course, if we have <img src="/home/chinmay/.local/state/emacs/var/org/persist/5d/150931-13a9-4205-bdd2-5881b0c77c51-261f3b026181847fe9c227a95e3c99c8.svg" alt="\(n-1\)" style="height: 0.8116em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> points then this collection has zero error. But this will overfit the data. Hence, we want to find a balance between minimizing error and minimizing the number of line segments. Formally, we want to minimize <img src="/home/chinmay/.local/state/emacs/var/org/persist/8d/19dedc-5365-478d-9c87-e8c94ddf2de0-1a936b2ee2d042ba82d960eea2315254.svg" alt="\(E+c\cdot L\)" style="height: 0.8497em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> where <img src="/home/chinmay/.local/state/emacs/var/org/persist/c7/2bcf2a-adcb-4ca3-b548-7ac74fb98ad8-7c5d13e6423a448627057c435d197266.svg" alt="\(c\)" style="height: 0.5203em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> is a given parameter called the <span class="underline">penalty per line</span>.
+A single line with the best fit for the points can be found using the well-known formula for linear regression. In the real world, a single line may not fit the dataset optimally, it may be a collection of line segments. Of course, if we have <img src="ltximg/report_b2d47bff8e5dcc8ed34468e5c9e76ace61158b9a.svg" alt="\(n-1\)" class="org-svg" /> points then this collection has zero error. But this will overfit the data. Hence, we want to find a balance between minimizing error and minimizing the number of line segments. Formally, we want to minimize <img src="ltximg/report_116c00666ad60109dda309e11bc5360abcfd1fe3.svg" alt="\(E+c\cdot L\)" class="org-svg" /> where <img src="ltximg/report_913552cd8223677353ba372223f56bbc9697af1b.svg" alt="\(c\)" class="org-svg" /> is a given parameter called the <span class="underline">penalty per line</span>.
 </p>
 </div>
 </div>
-<div id="outline-container-org56ecc58" class="outline-4">
-<h4 id="org56ecc58"><span class="section-number-4">2.1.2.</span> Algorithm</h4>
+<div id="outline-container-orgd1342d7" class="outline-4">
+<h4 id="orgd1342d7"><span class="section-number-4">2.1.2.</span> Algorithm</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <p>
 We used a dynamic programming approach with the following recurrence relation:
-<img src="/home/chinmay/.local/state/emacs/var/org/persist/cd/f27ccc-6ac6-453a-8899-bfe6b0c7a208-9ef94b0e5598a2198f57bde68fbf4bf6.svg" alt="\[\mathrm{OPT}(j) = \min_{1\le i \le j}{e_{i,j}+c+\mathrm{OPT}(i-1)}\]" style="height: 2.1393em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" />
+<img src="ltximg/report_573dd166566d12dbffc0f14ebc1772f06e660a32.svg" alt="\[\mathrm{OPT}(j) = \min_{1\le i \le j}{e_{i,j}+c+\mathrm{OPT}(i-1)}\]" class="org-svg" />
 </p>
 
 <p>
 where
 </p>
 <ul class="org-ul">
-<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/b5/5b2865-17ac-43e9-a8ba-c0870304a21d-a8094ecf2b9b8dc88b4c6a993bf9aef0.svg" alt="\(\mathrm{OPT}(j)\)" style="height: 1.0784em; vertical-align: -0.2942em; display: inline-block" class="org-latex org-latex-fragment" /> is the optimum solution for the first <img src="/home/chinmay/.local/state/emacs/var/org/persist/ba/f6b249-21f0-476a-b2db-be1b0ee340ac-b4e60d1f8e32bb1ec8a1ccc23b33bb43.svg" alt="\(j\)" style="height: 0.9353em; vertical-align: -0.2397em; display: inline-block" class="org-latex org-latex-fragment" /> points</li>
-<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/14/877576-a1ad-4093-9f87-cf392432ad54-347c87791c86a3d2381118bf2fbf4061.svg" alt="\(i\)" style="height: 0.7447em; vertical-align: -0.0492em; display: inline-block" class="org-latex org-latex-fragment" /> is the starting point of the last line segment</li>
-<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/43/a285ac-5e0f-4167-92d1-461d0c5c956d-d2270772571b2deba45319233a8a0d44.svg" alt="\(e_{i,j}\)" style="height: 0.8007em; vertical-align: -0.3296em; display: inline-block" class="org-latex org-latex-fragment" /> is the error for the last line segment</li>
-<li><img src="/home/chinmay/.local/state/emacs/var/org/persist/bd/dbe55e-e5f0-4465-8466-2314a9e5475f-58dc1fbed3be5f67f39888632398683a.svg" alt="\(\mathrm{OPT}(i-1)\)" style="height: 1.0784em; vertical-align: -0.2942em; display: inline-block" class="org-latex org-latex-fragment" /> is the error for the first <img src="/home/chinmay/.local/state/emacs/var/org/persist/61/5a1b47-b79a-490b-9334-4eb4228e8012-ff0f4589420264b03cd6b2d391ee8f23.svg" alt="\(i-1\)" style="height: 0.8264em; vertical-align: -0.1309em; display: inline-block" class="org-latex org-latex-fragment" /> points</li>
+<li><img src="ltximg/report_2092c4d5037679a10478d82f490312ae9f22649f.svg" alt="\(\mathrm{OPT}(j)\)" class="org-svg" /> is the optimum solution for the first <img src="ltximg/report_898523cb79968388d249b09fc91c9cb7961c11bf.svg" alt="\(j\)" class="org-svg" /> points</li>
+<li><img src="ltximg/report_6cf2f08af66400fd36f0183308ae35968f9ae29f.svg" alt="\(i\)" class="org-svg" /> is the starting point of the last line segment</li>
+<li><img src="ltximg/report_8664ded232c8c5c2ec730fdc2dfb289d2038e7e5.svg" alt="\(e_{i,j}\)" class="org-svg" /> is the error for the last line segment</li>
+<li><img src="ltximg/report_88273a2a03b2487fbf71b90636bd457f1f3b14f2.svg" alt="\(\mathrm{OPT}(i-1)\)" class="org-svg" /> is the error for the first <img src="ltximg/report_d867343848d7e0f57c71aa0b8841b87c81c3758d.svg" alt="\(i-1\)" class="org-svg" /> points</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org554cde3" class="outline-4">
-<h4 id="org554cde3"><span class="section-number-4">2.1.3.</span> Pseudocode</h4>
+<div id="outline-container-org40cee27" class="outline-4">
+<h4 id="org40cee27"><span class="section-number-4">2.1.3.</span> Pseudocode</h4>
 <div class="outline-text-4" id="text-2-1-3">
-<pre class="example" id="orgfa4c22b">
+<pre class="example" id="orgb3bb585">
 Segmented-Least-Squares(n)
     Array M[0..n]
     Set M[0] = 0
@@ -315,38 +396,68 @@ Segmented-Least-Squares(n)
 </div>
 </div>
 </div>
-<div id="outline-container-org6333a9c" class="outline-3">
-<h3 id="org6333a9c"><span class="section-number-3">2.2.</span> Issues in coding</h3>
+<div id="outline-container-org5e9405c" class="outline-3">
+<h3 id="org5e9405c"><span class="section-number-3">2.2.</span> Issues in coding</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 The case where slope is infinity had to be handled separately as we were getting NaN/ <code>SIGFPU</code> otherwise.
 </p>
 </div>
 </div>
-<div id="outline-container-org85f3518" class="outline-3">
-<h3 id="org85f3518"><span class="section-number-3">2.3.</span> Results</h3>
+<div id="outline-container-orgd5281ef" class="outline-3">
+<h3 id="orgd5281ef"><span class="section-number-3">2.3.</span> Results</h3>
 <div class="outline-text-3" id="text-2-3">
 <ul class="org-ul">
-<li>Test case 1: 10 points, penalty per line = 3 - RSS = 13.6, no. of lines = 4</li>
+<li><p>
+Test case 1
+</p>
+
+<p>
+Input: 10 points, penalty per line = 3
+</p>
+
+<p>
+Output: RSS = 13.6, no. of lines = 4
+</p></li>
 </ul>
 
-<div id="orgc22c602" class="figure">
+<div id="org5707c71" class="figure">
 <p><img src="Segmented_Least_Squares/2023-04-28_23-49-54_screenshot.png" alt="2023-04-28_23-49-54_screenshot.png" />
 </p>
 </div>
 <ul class="org-ul">
-<li>Test case 2: 11 points, penalty per line = 200 - RSS = 402.7, no. of lines = 2</li>
+<li><p>
+Test case 2
+</p>
+
+<p>
+Input: 11 points, penalty per line = 200
+</p>
+
+<p>
+Output: RSS = 402.7, no. of lines = 2
+</p></li>
 </ul>
 
-<div id="org4722234" class="figure">
+<div id="org15478b0" class="figure">
 <p><img src="Segmented_Least_Squares/2023-04-28_23-53-03_screenshot.png" alt="2023-04-28_23-53-03_screenshot.png" />
 </p>
 </div>
 <ul class="org-ul">
-<li>Test case 3: 100 points, penalty per line = 94 - RSS = 4307.14, no. of lines = 44</li>
+<li><p>
+Test case 3
+</p>
+
+<p>
+Input: 100 points, penalty per line = 94
+</p>
+
+<p>
+Output: RSS = 4307.14, no. of lines = 44
+</p></li>
 </ul>
 
-<div id="org649e4ed" class="figure">
+<div id="orgd5afcd2" class="figure">
 <p><img src="Segmented_Least_Squares/2023-04-28_23-54-36_screenshot.png" alt="2023-04-28_23-54-36_screenshot.png" />
 </p>
 </div>
@@ -356,7 +467,7 @@ The case where slope is infinity had to be handled separately as we were getting
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Chinmay Dalal (2020A7PS2060H), Ashwin Pugalia(2020A7PS1080H), Deep Chordia(2020A7PS2073H), Yash Ratnani(2020A7PS0039H)</p>
-<p class="date">Created: 2023-04-29 Sat 04:30</p>
+<p class="date">Created: 2023-04-29 Sat 12:58</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
