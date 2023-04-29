@@ -29,17 +29,23 @@ plt.xlabel('x')
 plt.ylabel('y')
 for _ in range(len(partitions)) :
     x, y = list(), list()
+    xp_min , xp_max = 10 ** 10, -10 ** 10
+    yp_min, yp_max = 10 ** 10, -10 ** 10
     for i in range(len(partitions[_])) :
         x.append(partitions[_][i][0])
         y.append(partitions[_][i][1])
+        xp_max = max(xp_max , partitions[_][i][0])
+        xp_min = min(xp_min , partitions[_][i][0])
+        yp_max = max(yp_max , partitions[_][i][1])
+        yp_min = max(yp_min , partitions[_][i][1])
     ax.scatter(x , y , color = col_arr[cur_col])
     a, b, c = line_eq[_]
     if b == 0 : 
         plt.axvline(x = -c, color = col_arr[cur_col])
     else : 
-        y_max_p = a * x_max + c
-        y_min_p = a * x_min + c
-        x_now = [x_min, x_max]
+        y_max_p = a * xp_max + c
+        y_min_p = a * xp_min + c
+        x_now = [xp_min, xp_max]
         y_now = [y_min_p, y_max_p]
         ax.plot(x_now, y_now, color = col_arr[cur_col])
     cur_col += 1
