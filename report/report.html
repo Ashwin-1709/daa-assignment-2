@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-04-29 Sat 12:58 -->
+<!-- 2023-04-29 Sat 13:13 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CS F364 Assignment 2</title>
@@ -201,59 +201,59 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org227180c">1. Ford-Fulkerson Algorithm</a>
+<li><a href="#org2a64aad">1. Ford-Fulkerson Algorithm</a>
 <ul>
-<li><a href="#orga23cb3a">1.1. Description</a>
+<li><a href="#org9c77173">1.1. Description</a>
 <ul>
-<li><a href="#orga9e6959">1.1.1. Problem statement</a></li>
-<li><a href="#org3d7f03a">1.1.2. Algorithm</a></li>
+<li><a href="#org274c372">1.1.1. Problem statement</a></li>
+<li><a href="#orgcb07c1a">1.1.2. Algorithm</a></li>
 </ul>
 </li>
-<li><a href="#org9703ef8">1.2. Results</a>
+<li><a href="#org4c607cb">1.2. Results</a>
 <ul>
-<li><a href="#orga810585">1.2.1. Minimal cut</a></li>
-<li><a href="#org3c62561">1.2.2. Bipartite matching</a></li>
+<li><a href="#org9ece7c3">1.2.1. Minimal cut</a></li>
+<li><a href="#org57fa740">1.2.2. Bipartite matching</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgce00df0">2. Segmented Least Squares</a>
+<li><a href="#org7856194">2. Segmented Least Squares</a>
 <ul>
-<li><a href="#orgb0de6f4">2.1. Description</a>
+<li><a href="#org44a59a9">2.1. Description</a>
 <ul>
-<li><a href="#org59634f6">2.1.1. Problem statement</a></li>
-<li><a href="#orgd1342d7">2.1.2. Algorithm</a></li>
-<li><a href="#org40cee27">2.1.3. Pseudocode</a></li>
+<li><a href="#org2295d7f">2.1.1. Problem statement</a></li>
+<li><a href="#orge125942">2.1.2. Algorithm</a></li>
+<li><a href="#org2e26f59">2.1.3. Pseudocode</a></li>
 </ul>
 </li>
-<li><a href="#org5e9405c">2.2. Issues in coding</a></li>
-<li><a href="#orgd5281ef">2.3. Results</a></li>
+<li><a href="#org00d4967">2.2. Issues in coding</a></li>
+<li><a href="#org2441d1b">2.3. Results</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org227180c" class="outline-2">
-<h2 id="org227180c"><span class="section-number-2">1.</span> Ford-Fulkerson Algorithm</h2>
+<div id="outline-container-org2a64aad" class="outline-2">
+<h2 id="org2a64aad"><span class="section-number-2">1.</span> Ford-Fulkerson Algorithm</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orga23cb3a" class="outline-3">
-<h3 id="orga23cb3a"><span class="section-number-3">1.1.</span> Description</h3>
+<div id="outline-container-org9c77173" class="outline-3">
+<h3 id="org9c77173"><span class="section-number-3">1.1.</span> Description</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-orga9e6959" class="outline-4">
-<h4 id="orga9e6959"><span class="section-number-4">1.1.1.</span> Problem statement</h4>
+<div id="outline-container-org274c372" class="outline-4">
+<h4 id="org274c372"><span class="section-number-4">1.1.1.</span> Problem statement</h4>
 <div class="outline-text-4" id="text-1-1-1">
 </div>
 <ol class="org-ol">
-<li><a id="org2f7d93b"></a>Minimal cut<br />
+<li><a id="org6e73e4c"></a>Minimal cut<br />
 <div class="outline-text-5" id="text-1-1-1-1">
 <p>
 The problem is to find the maximum flow of a flow network. It can be shown that this is equal to the minimum of the capacities of all possible <img src="ltximg/report_6c673d5fbf0314f1c28accfd7cee932f0b22a832.svg" alt="\(s-t\)" class="org-svg" /> cut. Therefore we want to find the minimal cut.
 </p>
 </div>
 </li>
-<li><a id="org7e6b9a2"></a>Bipartite matching<br />
+<li><a id="orgc719087"></a>Bipartite matching<br />
 <div class="outline-text-5" id="text-1-1-1-2">
 <p>
 A matching in a bipartite graph is a set of the edges chosen in such a way that no two edges share an endpoint. A maximum matching is a matching of maximum size (maximum number of edges). In a maximum matching, if any edge is added to it, it is no longer a matching. There can be more than one maximum matchings for a given bipartite graph. The maximum matching can also be found by converting into the flow problem described above
@@ -262,8 +262,8 @@ A matching in a bipartite graph is a set of the edges chosen in such a way that 
 </li>
 </ol>
 </div>
-<div id="outline-container-org3d7f03a" class="outline-4">
-<h4 id="org3d7f03a"><span class="section-number-4">1.1.2.</span> Algorithm</h4>
+<div id="outline-container-orgcb07c1a" class="outline-4">
+<h4 id="orgcb07c1a"><span class="section-number-4">1.1.2.</span> Algorithm</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 First, we set the flow of each edge to zero. Then we look for an <i>augmenting</i> path from <img src="ltximg/report_a743feb035b8a49a125d88122e4df96ef8872ab5.svg" alt="\(s\)" class="org-svg" /> to <img src="ltximg/report_8c1d38caa53d34773e54c247fc0d3d2ffe9400e2.svg" alt="\(t\)" class="org-svg" />. An augmenting path is a simple path in the residual graph, i.e. along the edges whose residual capacity is positive. If such a path is found, then we can increase the flow along these edges. We keep on searching for augmenting paths and increasing the flow. Once an augmenting path doesn't exist anymore, the flow is maximal.
@@ -271,63 +271,82 @@ First, we set the flow of each edge to zero. Then we look for an <i>augmenting</
 </div>
 </div>
 </div>
-<div id="outline-container-org9703ef8" class="outline-3">
-<h3 id="org9703ef8"><span class="section-number-3">1.2.</span> Results</h3>
+<div id="outline-container-org4c607cb" class="outline-3">
+<h3 id="org4c607cb"><span class="section-number-3">1.2.</span> Results</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-orga810585" class="outline-4">
-<h4 id="orga810585"><span class="section-number-4">1.2.1.</span> Minimal cut</h4>
+<div id="outline-container-org9ece7c3" class="outline-4">
+<h4 id="org9ece7c3"><span class="section-number-4">1.2.1.</span> Minimal cut</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <ul class="org-ul">
 <li>Test case 1</li>
 </ul>
+<p>
+Flow : 2, Min cuts : 2,
+Edges: 1-2, 6-8
+</p>
 
-<div id="orgfac58f3" class="figure">
+<div id="orgbfc8d07" class="figure">
 <p><img src="flows_and_cuts/flow2.png" alt="flow2.png" />
 </p>
 </div>
 <ul class="org-ul">
 <li>Test case 2</li>
 </ul>
+<p>
+Flow : 28, Min cuts : 3, Edges: 1-2, 3-6, 7-8
+</p>
 
-<div id="orgf754421" class="figure">
+<div id="orgcb3b6d8" class="figure">
 <p><img src="flows_and_cuts/flow3.png" alt="flow3.png" />
 </p>
 </div>
 <ul class="org-ul">
 <li>Test case 3</li>
 </ul>
+<p>
+Flow : 31, Min cuts : 6, Edges: 1-3, 1-6, 1-10, 2-10, 4-7, 5-8
+</p>
 
-<div id="orgc2118d0" class="figure">
+<div id="org0b4de58" class="figure">
 <p><img src="flows_and_cuts/flow4.png" alt="flow4.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org3c62561" class="outline-4">
-<h4 id="org3c62561"><span class="section-number-4">1.2.2.</span> Bipartite matching</h4>
+<div id="outline-container-org57fa740" class="outline-4">
+<h4 id="org57fa740"><span class="section-number-4">1.2.2.</span> Bipartite matching</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <ul class="org-ul">
 <li>Test case 1</li>
 </ul>
+<p>
+3 matches
+</p>
 
-<div id="org0858a5f" class="figure">
+<div id="org5341fd2" class="figure">
 <p><img src="bipartite_matching/bip1.png" alt="bip1.png" />
 </p>
 </div>
 <ul class="org-ul">
 <li>Test case 2</li>
 </ul>
+<p>
+7 matches
+</p>
 
-<div id="org91ebace" class="figure">
+<div id="org2c8cb9d" class="figure">
 <p><img src="bipartite_matching/bip2.png" alt="bip2.png" />
 </p>
 </div>
 <ul class="org-ul">
 <li>Test case 3</li>
 </ul>
+<p>
+8 matches
+</p>
 
-<div id="org2a3aaf5" class="figure">
+<div id="orgafebc90" class="figure">
 <p><img src="bipartite_matching/bip3.png" alt="bip3.png" />
 </p>
 </div>
@@ -335,16 +354,16 @@ First, we set the flow of each edge to zero. Then we look for an <i>augmenting</
 </div>
 </div>
 </div>
-<div id="outline-container-orgce00df0" class="outline-2">
-<h2 id="orgce00df0"><span class="section-number-2">2.</span> Segmented Least Squares</h2>
+<div id="outline-container-org7856194" class="outline-2">
+<h2 id="org7856194"><span class="section-number-2">2.</span> Segmented Least Squares</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orgb0de6f4" class="outline-3">
-<h3 id="orgb0de6f4"><span class="section-number-3">2.1.</span> Description</h3>
+<div id="outline-container-org44a59a9" class="outline-3">
+<h3 id="org44a59a9"><span class="section-number-3">2.1.</span> Description</h3>
 <div class="outline-text-3" id="text-2-1">
 </div>
-<div id="outline-container-org59634f6" class="outline-4">
-<h4 id="org59634f6"><span class="section-number-4">2.1.1.</span> Problem statement</h4>
+<div id="outline-container-org2295d7f" class="outline-4">
+<h4 id="org2295d7f"><span class="section-number-4">2.1.1.</span> Problem statement</h4>
 <div class="outline-text-4" id="text-2-1-1">
 <p>
 Given a set P of n points in the plane, denoted <img src="ltximg/report_0dcce5420d83f5431dd30e3fadb97dbc0eb201fe.svg" alt="\((x_1,y_1), (x_2,y_2), (x_3,y_3), …, (x_n,y_n)\)" class="org-svg" />; and suppose  <img src="ltximg/report_a897a414729d8d676b10d8956d489273178938ea.svg" alt="\(x_1 &amp;lt; x_2 &amp;lt; …&amp;lt; x_n\)" class="org-svg" />. 
@@ -359,8 +378,8 @@ A single line with the best fit for the points can be found using the well-known
 </p>
 </div>
 </div>
-<div id="outline-container-orgd1342d7" class="outline-4">
-<h4 id="orgd1342d7"><span class="section-number-4">2.1.2.</span> Algorithm</h4>
+<div id="outline-container-orge125942" class="outline-4">
+<h4 id="orge125942"><span class="section-number-4">2.1.2.</span> Algorithm</h4>
 <div class="outline-text-4" id="text-2-1-2">
 <p>
 We used a dynamic programming approach with the following recurrence relation:
@@ -378,10 +397,10 @@ where
 </ul>
 </div>
 </div>
-<div id="outline-container-org40cee27" class="outline-4">
-<h4 id="org40cee27"><span class="section-number-4">2.1.3.</span> Pseudocode</h4>
+<div id="outline-container-org2e26f59" class="outline-4">
+<h4 id="org2e26f59"><span class="section-number-4">2.1.3.</span> Pseudocode</h4>
 <div class="outline-text-4" id="text-2-1-3">
-<pre class="example" id="orgb3bb585">
+<pre class="example" id="org19fe215">
 Segmented-Least-Squares(n)
     Array M[0..n]
     Set M[0] = 0
@@ -396,16 +415,16 @@ Segmented-Least-Squares(n)
 </div>
 </div>
 </div>
-<div id="outline-container-org5e9405c" class="outline-3">
-<h3 id="org5e9405c"><span class="section-number-3">2.2.</span> Issues in coding</h3>
+<div id="outline-container-org00d4967" class="outline-3">
+<h3 id="org00d4967"><span class="section-number-3">2.2.</span> Issues in coding</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 The case where slope is infinity had to be handled separately as we were getting NaN/ <code>SIGFPU</code> otherwise.
 </p>
 </div>
 </div>
-<div id="outline-container-orgd5281ef" class="outline-3">
-<h3 id="orgd5281ef"><span class="section-number-3">2.3.</span> Results</h3>
+<div id="outline-container-org2441d1b" class="outline-3">
+<h3 id="org2441d1b"><span class="section-number-3">2.3.</span> Results</h3>
 <div class="outline-text-3" id="text-2-3">
 <ul class="org-ul">
 <li><p>
@@ -421,7 +440,7 @@ Output: RSS = 13.6, no. of lines = 4
 </p></li>
 </ul>
 
-<div id="org5707c71" class="figure">
+<div id="org8efc47e" class="figure">
 <p><img src="Segmented_Least_Squares/2023-04-28_23-49-54_screenshot.png" alt="2023-04-28_23-49-54_screenshot.png" />
 </p>
 </div>
@@ -439,7 +458,7 @@ Output: RSS = 402.7, no. of lines = 2
 </p></li>
 </ul>
 
-<div id="org15478b0" class="figure">
+<div id="org7da553a" class="figure">
 <p><img src="Segmented_Least_Squares/2023-04-28_23-53-03_screenshot.png" alt="2023-04-28_23-53-03_screenshot.png" />
 </p>
 </div>
@@ -457,7 +476,7 @@ Output: RSS = 4307.14, no. of lines = 44
 </p></li>
 </ul>
 
-<div id="orgd5afcd2" class="figure">
+<div id="orgf8511ce" class="figure">
 <p><img src="Segmented_Least_Squares/2023-04-28_23-54-36_screenshot.png" alt="2023-04-28_23-54-36_screenshot.png" />
 </p>
 </div>
@@ -467,7 +486,7 @@ Output: RSS = 4307.14, no. of lines = 44
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Chinmay Dalal (2020A7PS2060H), Ashwin Pugalia(2020A7PS1080H), Deep Chordia(2020A7PS2073H), Yash Ratnani(2020A7PS0039H)</p>
-<p class="date">Created: 2023-04-29 Sat 12:58</p>
+<p class="date">Created: 2023-04-29 Sat 13:13</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
