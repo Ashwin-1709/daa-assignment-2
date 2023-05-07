@@ -21,8 +21,9 @@ auto find_simple_path(i64 source, i64 sink,
     while (!Q.empty()) {
         auto [cur_flow, cur_node] = Q.front();
         Q.pop();
-        if (cur_node == sink)
+        if (cur_node == sink) {
             return {parent, cur_flow};
+        }
         for (auto &neighbours : adj[cur_node]) {
             // if residual capacity > 0 and not visited, visit it
             if (parent[neighbours] == -1 and

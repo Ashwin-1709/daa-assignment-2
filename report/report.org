@@ -93,4 +93,3 @@ The case where slope is infinity had to be handled separately as we were getting
   Output: RSS = 4307.14, no. of lines = 44
 #+DOWNLOADED: screenshot @ 2023-04-28 23:54:36
 [[file:Segmented_Least_Squares/2023-04-28_23-54-36_screenshot.png]]
-
