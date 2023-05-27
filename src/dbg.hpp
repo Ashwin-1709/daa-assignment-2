@@ -18,7 +18,7 @@ auto operator<<(std::ostream &os, const T_container &v) -> std::ostream & {
     }
     return os << '}';
 }
-template <typename T> void debug_out(std::string s, T t) {
+template <typename T> void debug_out(const std::string &s, T t) {
     std::cerr << "[" << s << ": " << t << "]\n";
 }
 template <typename T, typename... U>

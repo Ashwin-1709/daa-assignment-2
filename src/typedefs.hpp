@@ -8,6 +8,7 @@ using u16 = uint16_t;
 using u32 = uint32_t;
 using u64 = uint64_t;
 using u128 = __uint128_t;
+using isize = ptrdiff_t;
 using i8 = int8_t;
 using i16 = int16_t;
 using i32 = int32_t;

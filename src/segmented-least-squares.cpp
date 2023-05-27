@@ -9,17 +9,18 @@ const double INF = 1e15;
 /// @param y y-coordinate of a point
 /// @param line Possible best fit line
 /// @return Returns the squared error
-double dist(double x, double y, std::array<double, 3> line) {
+auto dist(double x, double y, std::array<double, 3> line) -> double {
     if (line[1] == 0)
         return (x + line[2]) * (x + line[2]);
-    double y_pred = line[0] * x + line[2];
+    double const y_pred = line[0] * x + line[2];
     return (y_pred - y) * (y_pred - y);
 }
 
 /// @brief Calculates the slope and intercept of possible best fit line
 /// @param points vector of points
 /// @return Returns the possible best fit line
-std::array<double, 3> get_line(std::vector<std::array<double, 2>> &points) {
+auto get_line(std::vector<std::array<double, 2>> &points)
+    -> std::array<double, 3> {
     double sum_x = 0, sum_y = 0, sum_xy = 0, sum_x2 = 0;
     for (auto &[x, y] : points) {
         sum_x += x;
@@ -27,13 +28,13 @@ std::array<double, 3> get_line(std::vector<std::array<double, 2>> &points) {
         sum_xy += x * y;
         sum_x2 += (x * x);
     }
-    uint32_t N = points.size();
+    auto const N = (double)points.size();
     if (N * sum_x2 - sum_x * sum_x == 0)
         return {1, 0, -sum_x / N};
     double slope = (N * sum_xy - sum_x * sum_y);
     slope = slope / (N * sum_x2 - sum_x * sum_x);
 
-    double intercept = (sum_y - slope * sum_x) / N;
+    double const intercept = (sum_y - slope * sum_x) / N;
     return {slope, -1, intercept};
 }
 
@@ -41,8 +42,8 @@ std::array<double, 3> get_line(std::vector<std::array<double, 2>> &points) {
 /// @param points std::vector or points
 /// @param line Possible best fit line
 /// @return Returns the error value
-double error(std::vector<std::array<double, 2>> &points,
-             std::array<double, 3> &line) {
+auto error(std::vector<std::array<double, 2>> &points,
+           std::array<double, 3> &line) -> double {
     double err = 0;
     for (auto &[x, y] : points)
         err += dist(x, y, line);
@@ -51,13 +52,13 @@ double error(std::vector<std::array<double, 2>> &points,
 
 /// @brief Outputs the best fit line segments found using
 /// segmented least squares algorithm
-int32_t main() {
-    int N;
+auto main() -> int {
+    usize N;
     std::cin >> N;
     double C;
     std::cin >> C;
     std::vector<std::array<double, 2>> points;
-    for (int i = 0; i < N; i++) {
+    for (usize i = 0; i < N; i++) {
         double x, y;
         std::cin >> x >> y;
         points.push_back({x, y});
@@ -66,10 +67,10 @@ int32_t main() {
     sort(begin(points), end(points));
 
     std::vector<std::vector<double>> e(N, std::vector<double>(N));
-    for (int i = 0; i < N; i++) {
+    for (usize i = 0; i < N; i++) {
         std::vector<std::array<double, 2>> p = {points[i]};
         e[i][i] = 0;
-        for (int j = i + 1; j < N; j++) {
+        for (usize j = i + 1; j < N; j++) {
             p.push_back(points[j]);
             auto new_l = get_line(p);
             e[i][j] = error(p, new_l);
@@ -78,9 +79,9 @@ int32_t main() {
 
     std::vector<double> dp(N);
     std::vector<bool> vis(N);
-    std::vector<int> optimal(N);
+    std::vector<u64> optimal(N);
 
-    auto f = [&](auto &&opt, int j) -> double {
+    auto f = [&](auto &&opt, usize j) -> double {
         if (j < 0) {
             return 0;
         }
@@ -89,8 +90,8 @@ int32_t main() {
         }
         vis[j] = true;
         double cur_err = INF;
-        for (int i = 0; i <= j; i++) {
-            double val = opt(opt, i - 1);
+        for (usize i = 0; i <= j; i++) {
+            double const val = opt(opt, i - 1);
             if (val + C + e[i][j] < cur_err) {
                 cur_err = val + C + e[i][j];
                 optimal[j] = i;
@@ -100,12 +101,12 @@ int32_t main() {
     };
 
     std::cout << f(f, N - 1) << '\n';
-    int cur_seg = N - 1;
+    u64 cur_seg = N - 1;
     std::vector<std::vector<std::array<double, 2>>> segments;
     while (cur_seg > 0) {
-        int from = optimal[cur_seg];
+        u64 const from = optimal[cur_seg];
         std::vector<std::array<double, 2>> cur_segment;
-        for (int j = from; j <= cur_seg; j++) {
+        for (u64 j = from; j <= cur_seg; j++) {
             cur_segment.push_back(points[j]);
         }
         segments.push_back(cur_segment);

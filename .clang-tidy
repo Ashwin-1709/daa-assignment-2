@@ -1,0 +1,8 @@
+Checks:
+  bugprone-*,
+  modernize-*,
+  performance-*,
+  readibility-*,
+  misc-*
+  -bugprone-easily-swappable-parameters
+  -misc-no-recursion

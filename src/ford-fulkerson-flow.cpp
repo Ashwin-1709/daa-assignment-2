@@ -3,14 +3,14 @@
 #include "typedefs.hpp"
 
 /// @brief Outputs the maximum flow in a flow network
-int32_t main() {
-    int N, M;
+auto main() -> int {
+    usize N, M;
     std::cin >> N >> M;
-    std::vector<std::vector<i64>> adj(N + 1),
-        residualCapacity(N + 1, std::vector<i64>(N + 1));
-    std::set<std::array<i64, 2>> forwardEdgeSet;
-    for (int i = 0; i < M; i++) {
-        i64 source, dest, capacity;
+    std::vector<std::vector<u64>> adj(N + 1),
+        residualCapacity(N + 1, std::vector<u64>(N + 1));
+    std::set<std::array<u64, 2>> forwardEdgeSet;
+    for (usize i = 0; i < M; i++) {
+        u64 source, dest, capacity;
         std::cin >> source >> dest >> capacity;
         forwardEdgeSet.insert({source, dest});
         adj[source].push_back(dest);
@@ -18,15 +18,14 @@ int32_t main() {
         residualCapacity[source][dest] += capacity;
     }
 
-    i64 flow = 0;
-    i64 s, t;
+    u64 s, t;
     std::cin >> s >> t;
     // Ford Fulkerson Max flow
     std::cout << "Flow : " << '\n';
     std::cout << findFlow(s, t, residualCapacity, adj, forwardEdgeSet) << '\n';
 
     // min cut
-    auto minCuts = minCut(s, t, residualCapacity, adj, forwardEdgeSet);
+    auto minCuts = minCut(s, residualCapacity, adj, forwardEdgeSet);
     std::cout << "Min cuts : ";
     std::cout << minCuts.size() << '\n';
 
